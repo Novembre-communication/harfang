@@ -174,4 +174,505 @@ body.annotating .t-node:hover{outline:2px dashed rgba(239,201,35,.5);outline-off
     </button>
     <div class="sep"></div>
     <div class="mode-toggle">
-      <button class="mode-btn active" id="...
+      <button class="mode-btn active" id="btnList" onclick="setMode('list')">Liste</button>
+      <button class="mode-btn" id="btnTree" onclick="setMode('tree')">Arborescence</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="listView">
+    <div class="root" onclick="toggleAll()">
+      <div class="root-t">harfang-events.fr</div>
+      <div class="root-h">Cliquer pour tout ouvrir / fermer</div>
+    </div>
+    <div id="listInner"></div>
+  </div>
+  <div id="treeView">
+    <div id="treeCanvas">
+      <svg class="connectors" id="svgLines"></svg>
+    </div>
+  </div>
+</main>
+
+<!-- Formulaire post-it -->
+<div class="postit-form" id="postitForm" style="display:none">
+  <div class="postit-form-head">
+    Nouveau commentaire
+    <button class="postit-form-close" onclick="closeForm()">✕</button>
+  </div>
+  <input type="text" id="formAuthor" placeholder="Votre prénom…" maxlength="24">
+  <textarea id="formText" placeholder="Votre commentaire…" maxlength="300"></textarea>
+  <div class="postit-form-actions">
+    <button class="btn-cancel" onclick="closeForm()">Annuler</button>
+    <button class="btn-send" onclick="submitComment()">Publier</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════
+   DONNÉES
+═══════════════════════════════════════ */
+const D=[
+  {color:'#EFC923',title:'Accueil',desc:'Page d\'entrée.'},
+  {color:'#5f9fbf',title:'Agence',desc:'Histoire, ADN, méthode, équipe.'},
+  {color:'#9f8fdf',title:'Expertises',desc:'Les métiers maîtrisés.',hub:true,
+   children:[
+    {title:'Création',desc:'Concepts, scénographies, identités visuelles.'},
+    {title:'Fabrication',desc:'Atelier en propre : stands, mobilier, décors.'},
+    {title:'Design d\'espace',desc:'Conception 3D et aménagement.'},
+    {title:'Organisation',desc:'Conseil, coordination et régie générale.'},
+    {title:'Technique',desc:'Son, lumière, vidéo, structure scénique.'},
+    {title:'Captation',desc:'Reportage photo, vidéo.',hub:true,
+     children:[
+      {title:'Reportage photo'},
+      {title:'Reportage vidéo'},
+      {title:'Vidéo d\'entreprise'},
+     ]},
+    {title:'Scénographie',desc:'Environnement immersif.'},
+    {title:'Location mobilier',desc:'Mobilier événementiel.'},
+   ]},
+  {color:'#EFC923',title:'Solutions',desc:'Types d\'événements.',hub:true,
+   children:[
+    {title:'Événements entreprise',hub:true,
+     children:[
+      {title:'Séminaire'},{title:'Team Building'},{title:'Incentive'},
+      {title:'Soirée de Noël'},{title:'Soirée à thème'},{title:'Soirée insolite'},
+      {title:'Conférence'},{title:'Salons & congrès'},{title:'Sur-mesure'},
+     ]},
+    {title:'Événements commerciaux',hub:true,
+     children:[
+      {title:'Boutique éphémère'},{title:'Corner en magasin'},
+      {title:'Lancement de marque'},{title:'Lancement de produit'},{title:'Roadshow'},
+     ]},
+    {title:'Sur-mesure',desc:'Votre vision, nos mains.'},
+   ]},
+  {color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets.'},
+  {color:'#5f9fbf',title:'Agences',desc:'3 agences en France.',
+   children:[{title:'Strasbourg'},{title:'Paris'},{title:'Cannes'}]},
+  {color:'#cf8030',title:'Contact',desc:'Formulaire de devis.'},
+];
+
+/* ═══════════════════════════════════════
+   COMMENTAIRES — stockage partagé
+═══════════════════════════════════════ */
+let comments = []; // [{id,author,text,nodeKey,ts,offsetX,offsetY}]
+// nodeKey = titre du nœud (unique par page)
+
+async function loadComments(){
+  try{
+    const r = await window.storage.get('harfang-comments', true);
+    comments = r ? JSON.parse(r.value) : [];
+  }catch(e){ comments=[]; }
+  renderAllPostits();
+  updateCount();
+}
+
+async function saveComments(){
+  try{
+    await window.storage.set('harfang-comments', JSON.stringify(comments), true);
+  }catch(e){ showToast('Erreur de sauvegarde.'); }
+}
+
+/* ═══════════════════════════════════════
+   MODE LISTE
+═══════════════════════════════════════ */
+function n3el(n){
+  const d=document.createElement('div');
+  d.className='n3';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
+  d.dataset.nodekey=n.title;
+  d.innerHTML=`<div class="n3-dash">→</div><div><div class="n3-title">${n.title}</div>${n.desc?`<div class="n3-desc">${n.desc}</div>`:''}</div>`;
+  d.addEventListener('click', e=>{ if(annotating){ e.stopPropagation(); openForm(n.title, d); } });
+  return d;
+}
+function n2el(n){
+  const hasC=n.children&&n.children.length;
+  const d=document.createElement('div');
+  d.className='n2';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
+  d.dataset.nodekey=n.title;
+  d.innerHTML=`<div class="n2h" onclick="n2click(event,this,'${n.title.replace(/'/g,"\\'")}')">
+    <div class="n2-dot"></div>
+    <div class="n2-inf">
+      <div class="n2-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
+      ${n.desc?`<div class="n2-desc">${n.desc}</div>`:''}
+    </div>${hasC?'<span class="chev">›</span>':''}
+  </div>${hasC?'<div class="n2b"></div>':''}`;
+  if(hasC){const body=d.querySelector('.n2b');const list=document.createElement('div');list.className='n3list';n.children.forEach(c=>list.appendChild(c.children?n2el(c):n3el(c)));body.appendChild(list);}
+  return d;
+}
+function n2click(e,h,key){
+  if(annotating){ e.stopPropagation(); openForm(key, h.closest('.n2')); return; }
+  tog(h);
+}
+function n1el(n){
+  const hasC=n.children&&n.children.length;
+  const w=document.createElement('div');
+  w.className='n1';w.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
+  w.dataset.nodekey=n.title;
+  w.innerHTML=`<div class="n1h" onclick="n1click(event,this,'${n.title.replace(/'/g,"\\'")}')">
+    <div class="n1-ico" style="background:${n.color}"></div>
+    <div class="n1-inf">
+      <div class="n1-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
+      ${n.desc?`<div class="n1-desc">${n.desc}</div>`:''}
+    </div>
+    ${hasC?`<div class="n1-count">${n.children.length}p</div>`:''}
+    ${hasC?'<span class="chev">›</span>':''}
+  </div>${hasC?'<div class="n1b"><div class="n2list"></div></div>':''}`;
+  if(hasC){const list=w.querySelector('.n2list');n.children.forEach(c=>list.appendChild(n2el(c)));}
+  return w;
+}
+function n1click(e,h,key){
+  if(annotating){ e.stopPropagation(); openForm(key, h.closest('.n1')); return; }
+  tog(h);
+}
+function tog(h){const b=h.nextElementSibling,c=h.querySelector('.chev');if(!b)return;const o=b.style.display==='block';b.style.display=o?'none':'block';if(c)c.classList.toggle('open',!o);}
+let allOpen=false;
+function toggleAll(){ if(annotating)return; allOpen=!allOpen;document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display=allOpen?'block':'none');document.querySelectorAll('.chev').forEach(c=>c.classList.toggle('open',allOpen));}
+function doSearch(q){q=q.toLowerCase().trim();if(!q){document.querySelectorAll('.n1,.n2,.n3').forEach(e=>e.classList.remove('hidden'));document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='none');document.querySelectorAll('.chev').forEach(c=>c.classList.remove('open'));return;}document.querySelectorAll('.n3').forEach(e=>e.classList.toggle('hidden',!e.dataset.s.includes(q)));document.querySelectorAll('.n2').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n3')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n2b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});document.querySelectorAll('.n1').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n2')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n1b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});}
+
+const listInner=document.getElementById('listInner');
+D.forEach(n=>listInner.appendChild(n1el(n)));
+
+/* ═══════════════════════════════════════
+   MODE ARBORESCENCE
+═══════════════════════════════════════ */
+const PAD_X=20,PAD_Y=20;
+const NODE_W_ROOT=140,NODE_H_ROOT=32;
+const NODE_W_L1=88,NODE_H_L1=38;
+const NODE_W_L2=90,NODE_H_L2=24;
+const NODE_W_L3=80,NODE_H_L3=22;
+const GAP_X_L1=12,GAP_X_L2=6,GAP_X_L3=5;
+const ROW_H_01=55,ROW_H_12=50,ROW_H_23=44;
+let linesData=[];
+
+function measureL2Group(n2){if(!n2.children||!n2.children.length)return NODE_W_L2;const t=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;return Math.max(NODE_W_L2,t);}
+function measureL1Group(n1){if(!n1.children||!n1.children.length)return NODE_W_L1;const ws=n1.children.map(measureL2Group);const t=ws.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;return Math.max(NODE_W_L1,t);}
+
+function buildLayout(){
+  linesData=[];
+  const canvas=document.getElementById('treeCanvas');
+  const svg=document.getElementById('svgLines');
+  canvas.querySelectorAll('.t-node').forEach(e=>e.remove());
+  svg.innerHTML='';
+
+  const l1widths=D.map(measureL1Group);
+  const totalW=l1widths.reduce((a,b)=>a+b,0)+(D.length-1)*GAP_X_L1+PAD_X*2;
+  const rootY=PAD_Y,rootX=totalW/2-NODE_W_ROOT/2;
+
+  addNode(rootX,rootY,NODE_W_ROOT,NODE_H_ROOT,'harfang-events.fr','root-node','harfang-events.fr');
+
+  const l1Y=rootY+NODE_H_ROOT+ROW_H_01;
+  let curX=PAD_X;
+  D.forEach((n1,i)=>{
+    const gw=l1widths[i];
+    const l1X=curX+gw/2-NODE_W_L1/2;
+    addNode(l1X,l1Y,NODE_W_L1,NODE_H_L1,n1.title,'l1'+(n1.hub?' hub-node':''),n1.title);
+    addLine(totalW/2,rootY+NODE_H_ROOT,l1X+NODE_W_L1/2,l1Y);
+
+    if(n1.children&&n1.children.length){
+      const l2Y=l1Y+NODE_H_L1+ROW_H_12;
+      const l2ws=n1.children.map(measureL2Group);
+      const totalL2W=l2ws.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;
+      let l2CurX=curX+(gw-totalL2W)/2;
+      n1.children.forEach((n2,j)=>{
+        const l2gw=l2ws[j];
+        const l2X=l2CurX+l2gw/2-NODE_W_L2/2;
+        addNode(l2X,l2Y,NODE_W_L2,NODE_H_L2,n2.title,'l2'+(n2.hub?' hub-node':''),n2.title);
+        addLine(l1X+NODE_W_L1/2,l1Y+NODE_H_L1,l2X+NODE_W_L2/2,l2Y);
+        if(n2.children&&n2.children.length){
+          const l3Y=l2Y+NODE_H_L2+ROW_H_23;
+          const l3total=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;
+          let l3CurX=l2CurX+(l2gw-l3total)/2;
+          n2.children.forEach(n3=>{
+            addNode(l3CurX,l3Y,NODE_W_L3,NODE_H_L3,n3.title,'l3',n3.title);
+            addLine(l2X+NODE_W_L2/2,l2Y+NODE_H_L2,l3CurX+NODE_W_L3/2,l3Y);
+            l3CurX+=NODE_W_L3+GAP_X_L3;
+          });
+        }
+        l2CurX+=l2gw+GAP_X_L2;
+      });
+    }
+    curX+=gw+GAP_X_L1;
+  });
+
+  let maxY=0;
+  canvas.querySelectorAll('.t-node').forEach(n=>{const b=parseInt(n.style.top)+(parseInt(n.style.height)||40);if(b>maxY)maxY=b;});
+  canvas.style.width=totalW+'px';
+  canvas.style.height=(maxY+PAD_Y+60)+'px';
+  svg.setAttribute('viewBox',`0 0 ${totalW} ${maxY+PAD_Y+60}`);
+  svg.style.width=totalW+'px';
+  svg.style.height=(maxY+PAD_Y+60)+'px';
+  linesData.forEach(([x1,y1,x2,y2])=>{
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    const midY=(y1+y2)/2;
+    path.setAttribute('d',`M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`);
+    path.setAttribute('stroke','rgba(239,201,35,0.25)');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke-linecap','round');
+    svg.appendChild(path);
+  });
+
+  renderAllPostits();
+}
+
+function addNode(x,y,w,h,label,cls,key){
+  const canvas=document.getElementById('treeCanvas');
+  const el=document.createElement('div');
+  el.className='t-node '+cls;
+  el.style.left=x+'px';el.style.top=y+'px';
+  el.style.width=w+'px';el.style.minHeight=h+'px';
+  el.dataset.nodekey=key;
+  el.textContent=label;
+  el.addEventListener('click',()=>{ if(annotating) openForm(key, el); });
+  canvas.appendChild(el);
+}
+function addLine(x1,y1,x2,y2){linesData.push([x1,y1,x2,y2]);}
+
+/* ═══════════════════════════════════════
+   SWITCH MODE
+═══════════════════════════════════════ */
+let currentMode='list';
+function setMode(mode){
+  currentMode=mode;
+  document.getElementById('btnList').classList.toggle('active',mode==='list');
+  document.getElementById('btnTree').classList.toggle('active',mode==='tree');
+  if(mode==='list'){
+    document.getElementById('listView').classList.remove('hidden');
+    document.getElementById('treeView').classList.remove('active');
+  }else{
+    document.getElementById('listView').classList.add('hidden');
+    document.getElementById('treeView').classList.add('active');
+    buildLayout();
+  }
+}
+
+/* ═══════════════════════════════════════
+   SYSTÈME D'ANNOTATION
+═══════════════════════════════════════ */
+let annotating=false;
+let pendingNodeKey=null, pendingAnchor=null;
+
+function toggleAnnotate(){
+  annotating=!annotating;
+  document.body.classList.toggle('annotating',annotating);
+  document.getElementById('btnAnnotate').classList.toggle('active',annotating);
+  if(!annotating) closeForm();
+  showToast(annotating ? 'Cliquez sur un nœud pour commenter' : 'Mode commentaire désactivé');
+}
+
+function openForm(nodeKey, anchorEl){
+  pendingNodeKey=nodeKey;
+  pendingAnchor=anchorEl;
+  const form=document.getElementById('postitForm');
+  // Positionner le formulaire près du nœud
+  const rect=anchorEl.getBoundingClientRect();
+  let top=rect.bottom+8, left=rect.left;
+  if(left+230>window.innerWidth) left=window.innerWidth-235;
+  if(top+200>window.innerHeight) top=rect.top-210;
+  form.style.top=top+'px';
+  form.style.left=left+'px';
+  form.style.display='block';
+  setTimeout(()=>document.getElementById('formAuthor').focus(),50);
+}
+
+function closeForm(){
+  document.getElementById('postitForm').style.display='none';
+  document.getElementById('formAuthor').value='';
+  document.getElementById('formText').value='';
+  pendingNodeKey=null;pendingAnchor=null;
+}
+
+function submitComment(){
+  const author=document.getElementById('formAuthor').value.trim()||'Anonyme';
+  const text=document.getElementById('formText').value.trim();
+  if(!text){ document.getElementById('formText').focus(); return; }
+  if(!pendingNodeKey){ closeForm(); return; }
+
+  const comment={
+    id:'c'+Date.now(),
+    author,text,
+    nodeKey:pendingNodeKey,
+    ts:new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}),
+    // offset relatif au nœud (post-it décalé à droite)
+    offsetX:10, offsetY:-10
+  };
+  comments.push(comment);
+  saveComments();
+  renderAllPostits();
+  updateCount();
+  closeForm();
+  showToast(`Commentaire publié sur « ${pendingNodeKey} »`);
+}
+
+/* ═══════════════════════════════════════
+   RENDU POST-ITS
+═══════════════════════════════════════ */
+function renderAllPostits(){
+  // Supprimer anciens post-its
+  document.querySelectorAll('.postit-wrap').forEach(e=>e.remove());
+
+  comments.forEach(c=>renderPostit(c));
+  // Pastilles
+  renderBadges();
+}
+
+function renderPostit(c){
+  const canvas=currentMode==='tree'
+    ? document.getElementById('treeCanvas')
+    : document.getElementById('listView');
+
+  // Trouver l'ancre
+  const anchor=canvas.querySelector(`[data-nodekey="${CSS.escape(c.nodeKey)}"]`);
+  if(!anchor) return; // nœud pas visible (pas déplié, mauvais mode)
+
+  const wrap=document.createElement('div');
+  wrap.className='postit-wrap active';
+  wrap.dataset.cid=c.id;
+
+  const pit=document.createElement('div');
+  pit.className='postit';
+  pit.innerHTML=`
+    <div class="postit-head" onmousedown="startDrag(event,'${c.id}')">
+      <span class="postit-author">${escHtml(c.author)}</span>
+      <span class="postit-date">${c.ts}</span>
+      <button class="postit-del" onclick="deleteComment('${c.id}')" title="Supprimer">✕</button>
+    </div>
+    <div class="postit-body">${escHtml(c.text)}</div>`;
+  wrap.appendChild(pit);
+
+  // Positionnement
+  if(currentMode==='tree'){
+    const anchorLeft=parseInt(anchor.style.left)||0;
+    const anchorTop=parseInt(anchor.style.top)||0;
+    const anchorW=parseInt(anchor.style.width)||80;
+    wrap.style.position='absolute';
+    wrap.style.left=(anchorLeft+anchorW+c.offsetX)+'px';
+    wrap.style.top=(anchorTop+c.offsetY)+'px';
+    canvas.appendChild(wrap);
+  }else{
+    // Mode liste : on place le post-it en absolute par rapport au nœud
+    const anchorRect=anchor.getBoundingClientRect();
+    const canvasRect=canvas.getBoundingClientRect();
+    wrap.style.position='absolute';
+    wrap.style.left=(anchorRect.right-canvasRect.left+c.offsetX+window.scrollX)+'px';
+    wrap.style.top=(anchorRect.top-canvasRect.top+c.offsetY+window.scrollY)+'px';
+    canvas.style.position='relative';
+    canvas.appendChild(wrap);
+  }
+
+  // Drag
+  makeDraggable(wrap, c.id);
+}
+
+function renderBadges(){
+  // Enlever anciennes pastilles
+  document.querySelectorAll('.n-badge,.node-comment-badge').forEach(e=>e.remove());
+
+  const counts={};
+  comments.forEach(c=>{ counts[c.nodeKey]=(counts[c.nodeKey]||0)+1; });
+
+  Object.entries(counts).forEach(([key,n])=>{
+    // Mode arborescence
+    document.querySelectorAll(`.t-node[data-nodekey="${CSS.escape(key)}"]`).forEach(el=>{
+      const b=document.createElement('div');
+      b.className='n-badge';b.textContent=n;
+      el.style.position='relative';
+      el.appendChild(b);
+    });
+    // Mode liste
+    document.querySelectorAll(`[data-nodekey="${CSS.escape(key)}"] .n1h,
+      [data-nodekey="${CSS.escape(key)}"] .n2h`).forEach(el=>{
+      const b=document.createElement('div');
+      b.className='node-comment-badge';b.textContent=n;
+      el.style.position='relative';
+      el.appendChild(b);
+    });
+  });
+}
+
+function deleteComment(id){
+  comments=comments.filter(c=>c.id!==id);
+  saveComments();
+  renderAllPostits();
+  updateCount();
+  showToast('Commentaire supprimé');
+}
+
+function updateCount(){
+  const el=document.getElementById('commentCount');
+  el.textContent=comments.length;
+  el.classList.toggle('visible',comments.length>0);
+}
+
+/* ═══════════════════════════════════════
+   DRAG POST-IT
+═══════════════════════════════════════ */
+let dragState=null;
+function makeDraggable(wrap, id){
+  const head=wrap.querySelector('.postit-head');
+  head.addEventListener('mousedown', e=>startDrag(e,id));
+}
+function startDrag(e,id){
+  e.preventDefault();
+  const wrap=document.querySelector(`.postit-wrap[data-cid="${id}"]`);
+  if(!wrap)return;
+  dragState={id,wrap,startX:e.clientX,startY:e.clientY,origLeft:parseInt(wrap.style.left)||0,origTop:parseInt(wrap.style.top)||0};
+  document.addEventListener('mousemove',onDrag);
+  document.addEventListener('mouseup',endDrag);
+}
+function onDrag(e){
+  if(!dragState)return;
+  const dx=e.clientX-dragState.startX,dy=e.clientY-dragState.startY;
+  dragState.wrap.style.left=(dragState.origLeft+dx)+'px';
+  dragState.wrap.style.top=(dragState.origTop+dy)+'px';
+}
+function endDrag(){
+  if(!dragState)return;
+  // Persister le nouvel offset
+  const c=comments.find(c=>c.id===dragState.id);
+  if(c){
+    const anchor=document.querySelector(`[data-nodekey="${CSS.escape(c.nodeKey)}"]`);
+    if(anchor && currentMode==='tree'){
+      const anchorLeft=parseInt(anchor.style.left)||0;
+      const anchorW=parseInt(anchor.style.width)||80;
+      c.offsetX=parseInt(dragState.wrap.style.left)-anchorLeft-anchorW;
+      c.offsetY=parseInt(dragState.wrap.style.top)-(parseInt(anchor.style.top)||0);
+    }
+    saveComments();
+  }
+  document.removeEventListener('mousemove',onDrag);
+  document.removeEventListener('mouseup',endDrag);
+  dragState=null;
+}
+
+/* ═══════════════════════════════════════
+   UTILITAIRES
+═══════════════════════════════════════ */
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// Fermer formulaire si clic hors formulaire
+document.addEventListener('click',e=>{
+  const form=document.getElementById('postitForm');
+  if(form.style.display!=='none' && !form.contains(e.target) && !e.target.closest('[data-nodekey]')){
+    closeForm();
+  }
+});
+
+/* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+loadComments();
+</script>
+</body>
+</html>
