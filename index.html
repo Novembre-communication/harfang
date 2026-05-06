@@ -9,28 +9,43 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0a0c0f;color:#e8e4d8;font-family:'Syne',sans-serif;font-size:14px;min-height:100vh}
 
-header{background:#111318;border-bottom:1px solid rgba(255,255,255,.07);padding:16px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:center;gap:8px}
+/* ── HEADER ── */
+header{background:#111318;border-bottom:1px solid rgba(255,255,255,.07);padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:200}
+.logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .logo-sq{width:24px;height:24px;border:2px solid #EFC923;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#EFC923}
 .logo-name{font-size:12px;font-weight:700;color:#EFC923;letter-spacing:.1em;text-transform:uppercase}
-.sep{width:1px;height:18px;background:rgba(255,255,255,.08)}
-.htitle{font-size:10px;color:rgba(232,228,216,.3);letter-spacing:.08em;text-transform:uppercase}
-.search{flex:1;max-width:280px;margin-left:auto}
+.sep{width:1px;height:18px;background:rgba(255,255,255,.08);flex-shrink:0}
+.htitle{font-size:10px;color:rgba(232,228,216,.3);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.search{flex:1;max-width:240px}
 .search input{width:100%;padding:7px 12px;background:#181c22;border:1px solid rgba(255,255,255,.07);border-radius:6px;color:#e8e4d8;font-family:'DM Mono',monospace;font-size:11px;outline:none;transition:border-color .15s}
 .search input:focus{border-color:#EFC923}
 .search input::placeholder{color:rgba(232,228,216,.25)}
+.header-right{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}
+.mode-toggle{display:flex;background:#181c22;border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:3px;gap:3px}
+.mode-btn{padding:6px 13px;font-size:11px;border:none;background:transparent;color:rgba(232,228,216,.5);cursor:pointer;border-radius:4px;transition:all .2s;font-weight:600;font-family:'Syne',sans-serif;white-space:nowrap}
+.mode-btn.active{background:#EFC923;color:#0a0c0f}
+.mode-btn:hover:not(.active){color:#e8e4d8}
 
-main{padding:24px 24px 60px;max-width:860px;margin:0 auto}
+/* Bouton commentaire */
+.btn-comment{display:flex;align-items:center;gap:6px;padding:6px 13px;font-size:11px;font-weight:600;font-family:'Syne',sans-serif;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:rgba(232,228,216,.6);border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-comment:hover{border-color:rgba(239,201,35,.5);color:#EFC923}
+.btn-comment.active{background:#EFC923;color:#0a0c0f;border-color:#EFC923}
+.btn-comment .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.comment-count{font-family:'DM Mono',monospace;font-size:10px;background:rgba(239,201,35,.15);color:#EFC923;border-radius:10px;padding:1px 6px;display:none}
+.comment-count.visible{display:inline-block}
 
-.root{background:linear-gradient(135deg,#EFC923,#d4a500);border-radius:10px;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;user-select:none}
-.root-t{font-size:13px;font-weight:700;color:#0a0c0f;letter-spacing:.03em}
+main{padding:20px 20px 80px}
+
+/* ── MODE LISTE ── */
+.root{background:linear-gradient(135deg,#EFC923,#d4a500);border-radius:10px;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;user-select:none;max-width:860px;margin-left:auto;margin-right:auto}
+.root-t{font-size:13px;font-weight:700;color:#0a0c0f}
 .root-h{font-family:'DM Mono',monospace;font-size:10px;color:rgba(0,0,0,.4)}
-
-.n1{margin-bottom:4px;border-radius:8px;border:1px solid rgba(255,255,255,.07);overflow:hidden;transition:border-color .2s}
+#listInner{max-width:860px;margin:0 auto}
+.n1{margin-bottom:4px;border-radius:8px;border:1px solid rgba(255,255,255,.07);overflow:hidden;transition:border-color .2s;position:relative}
 .n1:hover{border-color:rgba(239,201,35,.2)}
 .n1h{padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;background:#111318;user-select:none;transition:background .15s}
 .n1h:hover{background:#181c22}
-.n1-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.n1-ico{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 .n1-inf{flex:1}
 .n1-title{font-size:13px;font-weight:600;color:#e8e4d8}
 .n1-desc{font-size:11px;color:rgba(232,228,216,.45);margin-top:2px;line-height:1.4}
@@ -38,28 +53,109 @@ main{padding:24px 24px 60px;max-width:860px;margin:0 auto}
 .chev{font-size:12px;color:rgba(232,228,216,.25);transition:transform .2s;margin-left:8px;flex-shrink:0}
 .chev.open{transform:rotate(90deg);color:#EFC923}
 .n1b{display:none;border-top:1px solid rgba(255,255,255,.04);background:#0a0c0f}
-
 .n2list{padding:8px 16px 10px 50px;display:flex;flex-direction:column;gap:3px}
-.n2{border:1px solid rgba(255,255,255,.04);border-radius:6px;overflow:hidden;background:#111318;transition:border-color .15s}
+.n2{border:1px solid rgba(255,255,255,.04);border-radius:6px;overflow:hidden;background:#111318;transition:border-color .15s;position:relative}
 .n2:hover{border-color:rgba(255,255,255,.1)}
 .n2h{padding:9px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none}
-.n2-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.n2-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:#EFC923}
 .n2-inf{flex:1}
 .n2-title{font-size:12px;font-weight:600;color:#e8e4d8}
 .n2-desc{font-size:10px;color:rgba(232,228,216,.45);margin-top:2px;line-height:1.4}
 .n2b{display:none;border-top:1px solid rgba(255,255,255,.04);background:#181c22}
-
 .n3list{padding:6px 12px 8px 18px;display:flex;flex-direction:column;gap:1px;border-left:1px solid rgba(255,255,255,.07);margin:6px 12px}
-.n3{display:flex;gap:8px;padding:4px 2px}
+.n3{display:flex;gap:8px;padding:4px 2px;position:relative}
 .n3-dash{font-size:9px;color:rgba(239,201,35,.4);font-family:'DM Mono',monospace;margin-top:2px;flex-shrink:0}
 .n3-title{font-size:11px;font-weight:500;color:rgba(232,228,216,.6)}
 .n3-desc{font-size:10px;color:rgba(232,228,216,.3);margin-top:1px;line-height:1.4}
-
 .tag{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:10px;font-weight:500;margin-left:6px}
 .tag-hub{background:rgba(159,143,223,.1);color:#9f8fdf;border:1px solid rgba(159,143,223,.2)}
 
+/* ── PASTILLE COMMENTAIRE sur nœud liste ── */
+.node-comment-badge{position:absolute;top:8px;right:10px;background:#EFC923;color:#0a0c0f;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5}
+
+/* ── BOUTON + flottant sur nœud liste en mode annotation ── */
+body.annotating .n1h,
+body.annotating .n2h,
+body.annotating .n3{cursor:crosshair}
+body.annotating .n1h:hover,
+body.annotating .n2h:hover,
+body.annotating .n3:hover{outline:2px dashed rgba(239,201,35,.4);outline-offset:-2px}
+
+/* ── MODE ARBORESCENCE ── */
+#treeView{display:none;overflow-x:auto;padding-bottom:20px}
+#treeView.active{display:block}
+#listView.hidden{display:none}
+#treeCanvas{position:relative;overflow:visible}
+#treeCanvas svg.connectors{position:absolute;top:0;left:0;pointer-events:none;overflow:visible}
+.t-node{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;user-select:none;transition:transform .15s,box-shadow .15s;cursor:default}
+.t-node:hover{transform:translateY(-2px)}
+body.annotating .t-node{cursor:crosshair}
+body.annotating .t-node:hover{outline:2px dashed rgba(239,201,35,.5);outline-offset:3px;transform:none}
+.t-node.root-node{background:linear-gradient(135deg,#EFC923,#c49a00);border-radius:24px;padding:7px 18px;font-size:11px;font-weight:700;color:#0a0c0f;box-shadow:0 3px 14px rgba(239,201,35,.3)}
+.t-node.l1{background:#1a1f2a;border:1.5px solid rgba(239,201,35,.35);border-radius:6px;padding:4px 7px;font-size:9.5px;font-weight:600;color:#e8e4d8;box-shadow:0 2px 6px rgba(0,0,0,.4);min-width:60px;max-width:95px;flex-direction:column;gap:1px}
+.t-node.l1.hub-node{border-color:rgba(159,143,223,.5)}
+.t-node.l2{background:#111318;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:3px 9px;font-size:9px;font-weight:500;color:rgba(232,228,216,.8);min-width:75px;max-width:100px}
+.t-node.l2.hub-node{border-color:rgba(239,201,35,.3);color:#EFC923}
+.t-node.l3{background:#0d1017;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:3px 8px;font-size:8.5px;font-weight:500;color:rgba(232,228,216,.55);min-width:68px;max-width:90px}
+/* pastille sur nœud graphique */
+.t-node .n-badge{position:absolute;top:-6px;right:-6px;background:#EFC923;color:#0a0c0f;font-family:'DM Mono',monospace;font-size:7px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none}
+
+/* ── POST-IT ── */
+.postit-wrap{position:absolute;z-index:150;pointer-events:none}
+.postit-wrap.active{pointer-events:all}
+.postit{
+  background:#FFF9C4;
+  color:#1a1200;
+  border-radius:4px;
+  box-shadow:2px 3px 10px rgba(0,0,0,.45),0 1px 2px rgba(0,0,0,.2);
+  width:180px;
+  font-family:'Syne',sans-serif;
+  position:relative;
+  transition:box-shadow .15s;
+}
+.postit:hover{box-shadow:3px 5px 16px rgba(0,0,0,.55)}
+.postit-head{background:#F9E84A;border-radius:4px 4px 0 0;padding:6px 8px;display:flex;align-items:center;justify-content:space-between;cursor:move}
+.postit-author{font-size:9px;font-weight:700;letter-spacing:.04em;color:#5a4200;text-transform:uppercase;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.postit-date{font-family:'DM Mono',monospace;font-size:8px;color:rgba(90,66,0,.5);flex-shrink:0;margin-left:6px}
+.postit-del{background:none;border:none;cursor:pointer;color:rgba(90,66,0,.4);font-size:12px;padding:0 0 0 6px;line-height:1;transition:color .15s;flex-shrink:0}
+.postit-del:hover{color:#c0392b}
+.postit-body{padding:8px 9px 10px;font-size:11px;line-height:1.5;color:#2a1e00;min-height:44px;word-break:break-word;white-space:pre-wrap}
+.postit-connector{position:absolute;width:2px;background:rgba(249,232,74,.6);transform-origin:top center;pointer-events:none;z-index:149}
+
+/* Formulaire post-it */
+.postit-form{
+  position:fixed;z-index:300;
+  background:#FFF9C4;
+  border-radius:6px;
+  box-shadow:4px 6px 24px rgba(0,0,0,.6);
+  width:220px;
+  padding:0;
+  overflow:hidden;
+  animation:popIn .15s ease;
+}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.postit-form-head{background:#F9E84A;padding:8px 10px;font-size:10px;font-weight:700;color:#5a4200;text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center}
+.postit-form-close{background:none;border:none;cursor:pointer;font-size:14px;color:rgba(90,66,0,.5);padding:0}
+.postit-form-close:hover{color:#c0392b}
+.postit-form input,.postit-form textarea{width:100%;background:transparent;border:none;outline:none;font-family:'Syne',sans-serif;color:#2a1e00;padding:8px 10px}
+.postit-form input{border-bottom:1px solid rgba(90,66,0,.15);font-size:11px;font-weight:600}
+.postit-form input::placeholder,.postit-form textarea::placeholder{color:rgba(90,66,0,.35)}
+.postit-form textarea{font-size:11px;line-height:1.5;resize:none;height:80px}
+.postit-form-actions{display:flex;gap:6px;padding:8px 10px;border-top:1px solid rgba(90,66,0,.1)}
+.postit-form-actions button{flex:1;padding:7px;font-size:11px;font-weight:700;font-family:'Syne',sans-serif;border:none;border-radius:4px;cursor:pointer;transition:opacity .15s}
+.btn-send{background:#0a0c0f;color:#EFC923}
+.btn-send:hover{opacity:.85}
+.btn-cancel{background:rgba(90,66,0,.1);color:#5a4200}
+.btn-cancel:hover{opacity:.7}
+
+/* pas d'overlay — le curseur crosshair est géré via body.annotating */
+
+/* Toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1f2a;border:1px solid rgba(239,201,35,.3);color:#e8e4d8;font-size:11px;padding:9px 16px;border-radius:8px;opacity:0;transition:all .3s;pointer-events:none;z-index:400;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
 .hidden{display:none!important}
-::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:#0a0c0f}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
 </style>
@@ -70,150 +166,12 @@ main{padding:24px 24px 60px;max-width:860px;margin:0 auto}
   <div class="sep"></div>
   <div class="htitle">Arborescence du site</div>
   <div class="search"><input type="text" id="search" placeholder="Rechercher une page…" oninput="doSearch(this.value)"></div>
-</header>
-<main>
-  <div class="root" onclick="toggleAll()">
-    <div class="root-t">🌐 harfang-events.fr</div>
-    <div class="root-h">Cliquer pour tout ouvrir / fermer</div>
-  </div>
-  <div id="tree"></div>
-</main>
-<script>
-const D=[
-{icon:'🏠',color:'#EFC923',title:'Accueil',desc:'Page d\'entrée — présentation de l\'agence, expertises, solutions, équipe et agences.'},
-{icon:'🦅',color:'#5f9fbf',title:'Agence',desc:'Histoire, ADN, méthode, équipe et engagements de l\'agence Harfang.'},
-{icon:'⚡',color:'#9f8fdf',title:'Expertises',desc:'Les métiers maîtrisés par Harfang.',hub:true,
- children:[
-  {title:'Création',desc:'Concepts, scénographies, identités visuelles, supports de communication.'},
-  {title:'Fabrication',desc:'Atelier en propre : stands, mobilier, décors et objets sur-mesure.'},
-  {title:'Design d\'espace',desc:'Conception 3D et aménagement — stand, showroom, fan zone, espace éphémère.'},
-  {title:'Organisation',desc:'Conseil, coordination et régie générale de A à Z.'},
-  {title:'Technique',desc:'Son, lumière, vidéo, structure scénique — parc matériel haut de gamme.'},
-  {title:'Captation',desc:'Reportage photo, vidéo et vidéo d\'entreprise.',hub:true,
-   children:[
-    {title:'Reportage photo',desc:'Immortaliser un événement à travers des images percutantes.'},
-    {title:'Reportage vidéo',desc:'Format immersif — interviews, narration, ambiance.'},
-    {title:'Vidéo d\'entreprise',desc:'Raconter l\'histoire, les équipes et les valeurs de l\'entreprise.'},
-   ]},
-  {title:'Scénographie',desc:'Créer un environnement immersif — design, créativité et techniques avancées.'},
-  {title:'Location de mobilier',desc:'Large gamme de mobilier événementiel, livraison et installation incluses.'},
- ]},
-{icon:'🎯',color:'#EFC923',title:'Solutions',desc:'Les types d\'événements que nous livrons.',hub:true,
- children:[
-  {title:'Événements entreprise',desc:'Séminaire, team building, incentive, soirée, conférence, salon.',hub:true,
-   children:[
-    {title:'Séminaire d\'entreprise',desc:'Cohésion, formation, stratégie — sur une journée ou plusieurs jours.'},
-    {title:'Team Building',desc:'Activités pour renforcer la cohésion et la performance collective.'},
-    {title:'Incentive',desc:'Motiver et récompenser les collaborateurs — voyages, expériences, défis.'},
-    {title:'Soirée de Noël',desc:'Célébrer la fin d\'année et remercier les équipes.'},
-    {title:'Soirée à thème',desc:'Immersion totale dans un univers entièrement recréé.'},
-    {title:'Soirée insolite',desc:'Dîner secret, expérience sensorielle, concepts hors du commun.'},
-    {title:'Conférence',desc:'Rassembler des experts — présentiel, hybride ou international.'},
-    {title:'Salons et congrès',desc:'Organisation complète — stands, logistique, coordination.'},
-    {title:'Événement sur-mesure',desc:'Conçu de A à Z selon vos objectifs.'},
-   ]},
-  {title:'Événements commerciaux',desc:'Activation de marque — boutique éphémère, corner, lancement, roadshow.',hub:true,
-   children:[
-    {title:'Boutique éphémère',desc:'Pop-up temporaire pour créer du buzz et toucher un nouveau public.'},
-    {title:'Corner en magasin',desc:'Espace de marque immersif en point de vente.'},
-    {title:'Lancement de marque',desc:'Premier grand rendez-vous avec le public — identité, valeurs, histoire.'},
-    {title:'Lancement de produit',desc:'Créer un impact fort autour d\'une innovation.'},
-    {title:'Roadshow',desc:'Série d\'événements multi-villes pour aller à la rencontre de votre public.'},
-   ]},
-  {title:'Sur-mesure',desc:'Votre vision, nos mains — événement unique conçu de A à Z.'},
- ]},
-{icon:'📸',color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets réalisés — filtrables par expertise, solution et agence.'},
-{icon:'🏙️',color:'#5f9fbf',title:'Agences',desc:'3 agences en France.',
- children:[
-  {title:'Strasbourg',desc:'Siège historique — Grand Est, Alsace, Allemagne, Suisse.'},
-  {title:'Paris',desc:'IDF, national et international.'},
-  {title:'Cannes',desc:'Côte d\'Azur, MICE, Festival, Luxe.'},
- ]},
-{icon:'✉️',color:'#cf8030',title:'Contact',desc:'Formulaire de demande de devis — qualification par type de projet et agence.'},
-];
-
-function n3el(n){
-  const d=document.createElement('div');
-  d.className='n3';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
-  d.innerHTML=`<div class="n3-dash">→</div><div><div class="n3-title">${n.title}</div><div class="n3-desc">${n.desc||''}</div></div>`;
-  return d;
-}
-function n2el(n){
-  const hasC=n.children&&n.children.length;
-  const d=document.createElement('div');
-  d.className='n2';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
-  const chev=hasC||n.hub?'<span class="chev">›</span>':'';
-  d.innerHTML=`<div class="n2h" onclick="tog(this)">
-    <div class="n2-dot" style="background:#EFC923"></div>
-    <div class="n2-inf">
-      <div class="n2-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
-      <div class="n2-desc">${n.desc||''}</div>
-    </div>${chev}
-  </div>${hasC?'<div class="n2b"></div>':''}`;
-  if(hasC){
-    const body=d.querySelector('.n2b');
-    const list=document.createElement('div');list.className='n3list';
-    n.children.forEach(c=>list.appendChild(c.children?n2el(c):n3el(c)));
-    body.appendChild(list);
-  }
-  return d;
-}
-function n1el(n){
-  const hasC=n.children&&n.children.length;
-  const w=document.createElement('div');
-  w.className='n1';w.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
-  const chev=hasC?'<span class="chev">›</span>':'';
-  const count=hasC?`<div class="n1-count">${n.children.length} page${n.children.length>1?'s':''}</div>`:'';
-  w.innerHTML=`<div class="n1h" onclick="tog(this)">
-    <div class="n1-ico" style="background:${n.color}18">${n.icon}</div>
-    <div class="n1-inf">
-      <div class="n1-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
-      <div class="n1-desc">${n.desc||''}</div>
-    </div>${count}${chev}
-  </div>${hasC?'<div class="n1b"><div class="n2list"></div></div>':''}`;
-  if(hasC){
-    const list=w.querySelector('.n2list');
-    n.children.forEach(c=>list.appendChild(n2el(c)));
-  }
-  return w;
-}
-function tog(h){
-  const b=h.nextElementSibling,c=h.querySelector('.chev');
-  if(!b)return;
-  const o=b.style.display==='block';
-  b.style.display=o?'none':'block';
-  if(c)c.classList.toggle('open',!o);
-}
-let allOpen=false;
-function toggleAll(){
-  allOpen=!allOpen;
-  document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display=allOpen?'block':'none');
-  document.querySelectorAll('.chev').forEach(c=>c.classList.toggle('open',allOpen));
-}
-function doSearch(q){
-  q=q.toLowerCase().trim();
-  if(!q){
-    document.querySelectorAll('.n1,.n2,.n3').forEach(e=>e.classList.remove('hidden'));
-    document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='none');
-    document.querySelectorAll('.chev').forEach(c=>c.classList.remove('open'));
-    return;
-  }
-  document.querySelectorAll('.n3').forEach(e=>e.classList.toggle('hidden',!e.dataset.s.includes(q)));
-  document.querySelectorAll('.n2').forEach(e=>{
-    const m=e.dataset.s.includes(q);
-    const anyC=[...e.querySelectorAll('.n3')].some(n=>!n.classList.contains('hidden'));
-    e.classList.toggle('hidden',!m&&!anyC);
-    if(m||anyC){const b=e.querySelector('.n2b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}
-  });
-  document.querySelectorAll('.n1').forEach(e=>{
-    const m=e.dataset.s.includes(q);
-    const anyC=[...e.querySelectorAll('.n2')].some(n=>!n.classList.contains('hidden'));
-    e.classList.toggle('hidden',!m&&!anyC);
-    if(m||anyC){const b=e.querySelector('.n1b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}
-  });
-}
-const tree=document.getElementById('tree');
-D.forEach(n=>tree.appendChild(n1el(n)));
-</script>
-</body>
-</html>
+  <div class="header-right">
+    <button class="btn-comment" id="btnAnnotate" onclick="toggleAnnotate()">
+      <span class="dot"></span>
+      Commenter
+      <span class="comment-count" id="commentCount">0</span>
+    </button>
+    <div class="sep"></div>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="...
