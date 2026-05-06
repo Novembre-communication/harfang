@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arborescence — Harfang Événements</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0c0f;color:#e8e4d8;font-family:'Syne',sans-serif;font-size:14px;min-height:100vh}
+
+header{background:#111318;border-bottom:1px solid rgba(255,255,255,.07);padding:16px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-sq{width:24px;height:24px;border:2px solid #EFC923;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#EFC923}
+.logo-name{font-size:12px;font-weight:700;color:#EFC923;letter-spacing:.1em;text-transform:uppercase}
+.sep{width:1px;height:18px;background:rgba(255,255,255,.08)}
+.htitle{font-size:10px;color:rgba(232,228,216,.3);letter-spacing:.08em;text-transform:uppercase}
+.search{flex:1;max-width:280px;margin-left:auto}
+.search input{width:100%;padding:7px 12px;background:#181c22;border:1px solid rgba(255,255,255,.07);border-radius:6px;color:#e8e4d8;font-family:'DM Mono',monospace;font-size:11px;outline:none;transition:border-color .15s}
+.search input:focus{border-color:#EFC923}
+.search input::placeholder{color:rgba(232,228,216,.25)}
+
+main{padding:24px 24px 60px;max-width:860px;margin:0 auto}
+
+.root{background:linear-gradient(135deg,#EFC923,#d4a500);border-radius:10px;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;user-select:none}
+.root-t{font-size:13px;font-weight:700;color:#0a0c0f;letter-spacing:.03em}
+.root-h{font-family:'DM Mono',monospace;font-size:10px;color:rgba(0,0,0,.4)}
+
+.n1{margin-bottom:4px;border-radius:8px;border:1px solid rgba(255,255,255,.07);overflow:hidden;transition:border-color .2s}
+.n1:hover{border-color:rgba(239,201,35,.2)}
+.n1h{padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;background:#111318;user-select:none;transition:background .15s}
+.n1h:hover{background:#181c22}
+.n1-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.n1-inf{flex:1}
+.n1-title{font-size:13px;font-weight:600;color:#e8e4d8}
+.n1-desc{font-size:11px;color:rgba(232,228,216,.45);margin-top:2px;line-height:1.4}
+.n1-count{font-family:'DM Mono',monospace;font-size:10px;color:rgba(232,228,216,.25);flex-shrink:0}
+.chev{font-size:12px;color:rgba(232,228,216,.25);transition:transform .2s;margin-left:8px;flex-shrink:0}
+.chev.open{transform:rotate(90deg);color:#EFC923}
+.n1b{display:none;border-top:1px solid rgba(255,255,255,.04);background:#0a0c0f}
+
+.n2list{padding:8px 16px 10px 50px;display:flex;flex-direction:column;gap:3px}
+.n2{border:1px solid rgba(255,255,255,.04);border-radius:6px;overflow:hidden;background:#111318;transition:border-color .15s}
+.n2:hover{border-color:rgba(255,255,255,.1)}
+.n2h{padding:9px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none}
+.n2-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.n2-inf{flex:1}
+.n2-title{font-size:12px;font-weight:600;color:#e8e4d8}
+.n2-desc{font-size:10px;color:rgba(232,228,216,.45);margin-top:2px;line-height:1.4}
+.n2b{display:none;border-top:1px solid rgba(255,255,255,.04);background:#181c22}
+
+.n3list{padding:6px 12px 8px 18px;display:flex;flex-direction:column;gap:1px;border-left:1px solid rgba(255,255,255,.07);margin:6px 12px}
+.n3{display:flex;gap:8px;padding:4px 2px}
+.n3-dash{font-size:9px;color:rgba(239,201,35,.4);font-family:'DM Mono',monospace;margin-top:2px;flex-shrink:0}
+.n3-title{font-size:11px;font-weight:500;color:rgba(232,228,216,.6)}
+.n3-desc{font-size:10px;color:rgba(232,228,216,.3);margin-top:1px;line-height:1.4}
+
+.tag{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:10px;font-weight:500;margin-left:6px}
+.tag-hub{background:rgba(159,143,223,.1);color:#9f8fdf;border:1px solid rgba(159,143,223,.2)}
+
+.hidden{display:none!important}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#0a0c0f}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><div class="logo-sq">H</div><div class="logo-name">Harfang</div></div>
+  <div class="sep"></div>
+  <div class="htitle">Arborescence du site</div>
+  <div class="search"><input type="text" id="search" placeholder="Rechercher une page…" oninput="doSearch(this.value)"></div>
+</header>
+<main>
+  <div class="root" onclick="toggleAll()">
+    <div class="root-t">🌐 harfang-events.fr</div>
+    <div class="root-h">Cliquer pour tout ouvrir / fermer</div>
+  </div>
+  <div id="tree"></div>
+</main>
+<script>
+const D=[
+{icon:'🏠',color:'#EFC923',title:'Accueil',desc:'Page d\'entrée — présentation de l\'agence, expertises, solutions, équipe et agences.'},
+{icon:'🦅',color:'#5f9fbf',title:'Agence',desc:'Histoire, ADN, méthode, équipe et engagements de l\'agence Harfang.'},
+{icon:'⚡',color:'#9f8fdf',title:'Expertises',desc:'Les métiers maîtrisés par Harfang.',hub:true,
+ children:[
+  {title:'Création',desc:'Concepts, scénographies, identités visuelles, supports de communication.'},
+  {title:'Fabrication',desc:'Atelier en propre : stands, mobilier, décors et objets sur-mesure.'},
+  {title:'Design d\'espace',desc:'Conception 3D et aménagement — stand, showroom, fan zone, espace éphémère.'},
+  {title:'Organisation',desc:'Conseil, coordination et régie générale de A à Z.'},
+  {title:'Technique',desc:'Son, lumière, vidéo, structure scénique — parc matériel haut de gamme.'},
+  {title:'Captation',desc:'Reportage photo, vidéo et vidéo d\'entreprise.',hub:true,
+   children:[
+    {title:'Reportage photo',desc:'Immortaliser un événement à travers des images percutantes.'},
+    {title:'Reportage vidéo',desc:'Format immersif — interviews, narration, ambiance.'},
+    {title:'Vidéo d\'entreprise',desc:'Raconter l\'histoire, les équipes et les valeurs de l\'entreprise.'},
+   ]},
+  {title:'Scénographie',desc:'Créer un environnement immersif — design, créativité et techniques avancées.'},
+  {title:'Location de mobilier',desc:'Large gamme de mobilier événementiel, livraison et installation incluses.'},
+ ]},
+{icon:'🎯',color:'#EFC923',title:'Solutions',desc:'Les types d\'événements que nous livrons.',hub:true,
+ children:[
+  {title:'Événements entreprise',desc:'Séminaire, team building, incentive, soirée, conférence, salon.',hub:true,
+   children:[
+    {title:'Séminaire d\'entreprise',desc:'Cohésion, formation, stratégie — sur une journée ou plusieurs jours.'},
+    {title:'Team Building',desc:'Activités pour renforcer la cohésion et la performance collective.'},
+    {title:'Incentive',desc:'Motiver et récompenser les collaborateurs — voyages, expériences, défis.'},
+    {title:'Soirée de Noël',desc:'Célébrer la fin d\'année et remercier les équipes.'},
+    {title:'Soirée à thème',desc:'Immersion totale dans un univers entièrement recréé.'},
+    {title:'Soirée insolite',desc:'Dîner secret, expérience sensorielle, concepts hors du commun.'},
+    {title:'Conférence',desc:'Rassembler des experts — présentiel, hybride ou international.'},
+    {title:'Salons et congrès',desc:'Organisation complète — stands, logistique, coordination.'},
+    {title:'Événement sur-mesure',desc:'Conçu de A à Z selon vos objectifs.'},
+   ]},
+  {title:'Événements commerciaux',desc:'Activation de marque — boutique éphémère, corner, lancement, roadshow.',hub:true,
+   children:[
+    {title:'Boutique éphémère',desc:'Pop-up temporaire pour créer du buzz et toucher un nouveau public.'},
+    {title:'Corner en magasin',desc:'Espace de marque immersif en point de vente.'},
+    {title:'Lancement de marque',desc:'Premier grand rendez-vous avec le public — identité, valeurs, histoire.'},
+    {title:'Lancement de produit',desc:'Créer un impact fort autour d\'une innovation.'},
+    {title:'Roadshow',desc:'Série d\'événements multi-villes pour aller à la rencontre de votre public.'},
+   ]},
+  {title:'Sur-mesure',desc:'Votre vision, nos mains — événement unique conçu de A à Z.'},
+ ]},
+{icon:'📸',color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets réalisés — filtrables par expertise, solution et agence.'},
+{icon:'🏙️',color:'#5f9fbf',title:'Agences',desc:'3 agences en France.',
+ children:[
+  {title:'Strasbourg',desc:'Siège historique — Grand Est, Alsace, Allemagne, Suisse.'},
+  {title:'Paris',desc:'IDF, national et international.'},
+  {title:'Cannes',desc:'Côte d\'Azur, MICE, Festival, Luxe.'},
+ ]},
+{icon:'✉️',color:'#cf8030',title:'Contact',desc:'Formulaire de demande de devis — qualification par type de projet et agence.'},
+];
+
+function n3el(n){
+  const d=document.createElement('div');
+  d.className='n3';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
+  d.innerHTML=`<div class="n3-dash">→</div><div><div class="n3-title">${n.title}</div><div class="n3-desc">${n.desc||''}</div></div>`;
+  return d;
+}
+function n2el(n){
+  const hasC=n.children&&n.children.length;
+  const d=document.createElement('div');
+  d.className='n2';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
+  const chev=hasC||n.hub?'<span class="chev">›</span>':'';
+  d.innerHTML=`<div class="n2h" onclick="tog(this)">
+    <div class="n2-dot" style="background:#EFC923"></div>
+    <div class="n2-inf">
+      <div class="n2-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
+      <div class="n2-desc">${n.desc||''}</div>
+    </div>${chev}
+  </div>${hasC?'<div class="n2b"></div>':''}`;
+  if(hasC){
+    const body=d.querySelector('.n2b');
+    const list=document.createElement('div');list.className='n3list';
+    n.children.forEach(c=>list.appendChild(c.children?n2el(c):n3el(c)));
+    body.appendChild(list);
+  }
+  return d;
+}
+function n1el(n){
+  const hasC=n.children&&n.children.length;
+  const w=document.createElement('div');
+  w.className='n1';w.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
+  const chev=hasC?'<span class="chev">›</span>':'';
+  const count=hasC?`<div class="n1-count">${n.children.length} page${n.children.length>1?'s':''}</div>`:'';
+  w.innerHTML=`<div class="n1h" onclick="tog(this)">
+    <div class="n1-ico" style="background:${n.color}18">${n.icon}</div>
+    <div class="n1-inf">
+      <div class="n1-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
+      <div class="n1-desc">${n.desc||''}</div>
+    </div>${count}${chev}
+  </div>${hasC?'<div class="n1b"><div class="n2list"></div></div>':''}`;
+  if(hasC){
+    const list=w.querySelector('.n2list');
+    n.children.forEach(c=>list.appendChild(n2el(c)));
+  }
+  return w;
+}
+function tog(h){
+  const b=h.nextElementSibling,c=h.querySelector('.chev');
+  if(!b)return;
+  const o=b.style.display==='block';
+  b.style.display=o?'none':'block';
+  if(c)c.classList.toggle('open',!o);
+}
+let allOpen=false;
+function toggleAll(){
+  allOpen=!allOpen;
+  document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display=allOpen?'block':'none');
+  document.querySelectorAll('.chev').forEach(c=>c.classList.toggle('open',allOpen));
+}
+function doSearch(q){
+  q=q.toLowerCase().trim();
+  if(!q){
+    document.querySelectorAll('.n1,.n2,.n3').forEach(e=>e.classList.remove('hidden'));
+    document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='none');
+    document.querySelectorAll('.chev').forEach(c=>c.classList.remove('open'));
+    return;
+  }
+  document.querySelectorAll('.n3').forEach(e=>e.classList.toggle('hidden',!e.dataset.s.includes(q)));
+  document.querySelectorAll('.n2').forEach(e=>{
+    const m=e.dataset.s.includes(q);
+    const anyC=[...e.querySelectorAll('.n3')].some(n=>!n.classList.contains('hidden'));
+    e.classList.toggle('hidden',!m&&!anyC);
+    if(m||anyC){const b=e.querySelector('.n2b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}
+  });
+  document.querySelectorAll('.n1').forEach(e=>{
+    const m=e.dataset.s.includes(q);
+    const anyC=[...e.querySelectorAll('.n2')].some(n=>!n.classList.contains('hidden'));
+    e.classList.toggle('hidden',!m&&!anyC);
+    if(m||anyC){const b=e.querySelector('.n1b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}
+  });
+}
+const tree=document.getElementById('tree');
+D.forEach(n=>tree.appendChild(n1el(n)));
+</script>
+</body>
+</html>
