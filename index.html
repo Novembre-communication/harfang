@@ -9,43 +9,34 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0a0c0f;color:#e8e4d8;font-family:'Syne',sans-serif;font-size:14px;min-height:100vh}
 
-/* ── HEADER ── */
-header{background:#111318;border-bottom:1px solid rgba(255,255,255,.07);padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:200}
-.logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+header{background:#111318;border-bottom:1px solid rgba(255,255,255,.07);padding:16px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:8px}
 .logo-sq{width:24px;height:24px;border:2px solid #EFC923;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#EFC923}
 .logo-name{font-size:12px;font-weight:700;color:#EFC923;letter-spacing:.1em;text-transform:uppercase}
-.sep{width:1px;height:18px;background:rgba(255,255,255,.08);flex-shrink:0}
+.sep{width:1px;height:18px;background:rgba(255,255,255,.08)}
 .htitle{font-size:10px;color:rgba(232,228,216,.3);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
-.search{flex:1;max-width:240px}
+.search{flex:1;max-width:260px}
 .search input{width:100%;padding:7px 12px;background:#181c22;border:1px solid rgba(255,255,255,.07);border-radius:6px;color:#e8e4d8;font-family:'DM Mono',monospace;font-size:11px;outline:none;transition:border-color .15s}
 .search input:focus{border-color:#EFC923}
 .search input::placeholder{color:rgba(232,228,216,.25)}
-.header-right{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}
-.mode-toggle{display:flex;background:#181c22;border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:3px;gap:3px}
-.mode-btn{padding:6px 13px;font-size:11px;border:none;background:transparent;color:rgba(232,228,216,.5);cursor:pointer;border-radius:4px;transition:all .2s;font-weight:600;font-family:'Syne',sans-serif;white-space:nowrap}
+.mode-toggle{display:flex;background:#181c22;border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:3px;gap:3px;margin-left:auto;flex-shrink:0}
+.mode-btn{padding:6px 14px;font-size:11px;border:none;background:transparent;color:rgba(232,228,216,.5);cursor:pointer;border-radius:4px;transition:all .2s;font-weight:600;font-family:'Syne',sans-serif;white-space:nowrap}
 .mode-btn.active{background:#EFC923;color:#0a0c0f}
 .mode-btn:hover:not(.active){color:#e8e4d8}
 
-/* Bouton commentaire */
-.btn-comment{display:flex;align-items:center;gap:6px;padding:6px 13px;font-size:11px;font-weight:600;font-family:'Syne',sans-serif;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:rgba(232,228,216,.6);border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
-.btn-comment:hover{border-color:rgba(239,201,35,.5);color:#EFC923}
-.btn-comment.active{background:#EFC923;color:#0a0c0f;border-color:#EFC923}
-.btn-comment .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-.comment-count{font-family:'DM Mono',monospace;font-size:10px;background:rgba(239,201,35,.15);color:#EFC923;border-radius:10px;padding:1px 6px;display:none}
-.comment-count.visible{display:inline-block}
-
-main{padding:20px 20px 80px}
+main{padding:20px 20px 60px}
 
 /* ── MODE LISTE ── */
 .root{background:linear-gradient(135deg,#EFC923,#d4a500);border-radius:10px;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;user-select:none;max-width:860px;margin-left:auto;margin-right:auto}
 .root-t{font-size:13px;font-weight:700;color:#0a0c0f}
 .root-h{font-family:'DM Mono',monospace;font-size:10px;color:rgba(0,0,0,.4)}
 #listInner{max-width:860px;margin:0 auto}
-.n1{margin-bottom:4px;border-radius:8px;border:1px solid rgba(255,255,255,.07);overflow:hidden;transition:border-color .2s;position:relative}
+
+.n1{margin-bottom:4px;border-radius:8px;border:1px solid rgba(255,255,255,.07);overflow:hidden;transition:border-color .2s}
 .n1:hover{border-color:rgba(239,201,35,.2)}
 .n1h{padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;background:#111318;user-select:none;transition:background .15s}
 .n1h:hover{background:#181c22}
-.n1-ico{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.n1-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .n1-inf{flex:1}
 .n1-title{font-size:13px;font-weight:600;color:#e8e4d8}
 .n1-desc{font-size:11px;color:rgba(232,228,216,.45);margin-top:2px;line-height:1.4}
@@ -54,7 +45,7 @@ main{padding:20px 20px 80px}
 .chev.open{transform:rotate(90deg);color:#EFC923}
 .n1b{display:none;border-top:1px solid rgba(255,255,255,.04);background:#0a0c0f}
 .n2list{padding:8px 16px 10px 50px;display:flex;flex-direction:column;gap:3px}
-.n2{border:1px solid rgba(255,255,255,.04);border-radius:6px;overflow:hidden;background:#111318;transition:border-color .15s;position:relative}
+.n2{border:1px solid rgba(255,255,255,.04);border-radius:6px;overflow:hidden;background:#111318;transition:border-color .15s}
 .n2:hover{border-color:rgba(255,255,255,.1)}
 .n2h{padding:9px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none}
 .n2-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:#EFC923}
@@ -63,96 +54,67 @@ main{padding:20px 20px 80px}
 .n2-desc{font-size:10px;color:rgba(232,228,216,.45);margin-top:2px;line-height:1.4}
 .n2b{display:none;border-top:1px solid rgba(255,255,255,.04);background:#181c22}
 .n3list{padding:6px 12px 8px 18px;display:flex;flex-direction:column;gap:1px;border-left:1px solid rgba(255,255,255,.07);margin:6px 12px}
-.n3{display:flex;gap:8px;padding:4px 2px;position:relative}
+.n3{display:flex;gap:8px;padding:4px 2px}
 .n3-dash{font-size:9px;color:rgba(239,201,35,.4);font-family:'DM Mono',monospace;margin-top:2px;flex-shrink:0}
 .n3-title{font-size:11px;font-weight:500;color:rgba(232,228,216,.6)}
 .n3-desc{font-size:10px;color:rgba(232,228,216,.3);margin-top:1px;line-height:1.4}
 .tag{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:10px;font-weight:500;margin-left:6px}
 .tag-hub{background:rgba(159,143,223,.1);color:#9f8fdf;border:1px solid rgba(159,143,223,.2)}
 
-/* ── PASTILLE COMMENTAIRE sur nœud liste ── */
-.node-comment-badge{position:absolute;top:8px;right:10px;background:#EFC923;color:#0a0c0f;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5}
-
-/* ── BOUTON + flottant sur nœud liste en mode annotation ── */
-body.annotating .n1h,
-body.annotating .n2h,
-body.annotating .n3{cursor:crosshair}
-body.annotating .n1h:hover,
-body.annotating .n2h:hover,
-body.annotating .n3:hover{outline:2px dashed rgba(239,201,35,.4);outline-offset:-2px}
-
 /* ── MODE ARBORESCENCE ── */
 #treeView{display:none;overflow-x:auto;padding-bottom:20px}
 #treeView.active{display:block}
 #listView.hidden{display:none}
+
 #treeCanvas{position:relative;overflow:visible}
-#treeCanvas svg.connectors{position:absolute;top:0;left:0;pointer-events:none;overflow:visible}
-.t-node{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;user-select:none;transition:transform .15s,box-shadow .15s;cursor:default}
+#treeCanvas svg.connectors{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+
+.t-node{
+  position:absolute;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  cursor:default;
+  user-select:none;
+  transition:transform .15s, box-shadow .15s;
+}
 .t-node:hover{transform:translateY(-2px)}
-body.annotating .t-node{cursor:crosshair}
-body.annotating .t-node:hover{outline:2px dashed rgba(239,201,35,.5);outline-offset:3px;transform:none}
-.t-node.root-node{background:linear-gradient(135deg,#EFC923,#c49a00);border-radius:24px;padding:7px 18px;font-size:11px;font-weight:700;color:#0a0c0f;box-shadow:0 3px 14px rgba(239,201,35,.3)}
-.t-node.l1{background:#1a1f2a;border:1.5px solid rgba(239,201,35,.35);border-radius:6px;padding:4px 7px;font-size:9.5px;font-weight:600;color:#e8e4d8;box-shadow:0 2px 6px rgba(0,0,0,.4);min-width:60px;max-width:95px;flex-direction:column;gap:1px}
-.t-node.l1.hub-node{border-color:rgba(159,143,223,.5)}
-.t-node.l2{background:#111318;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:3px 9px;font-size:9px;font-weight:500;color:rgba(232,228,216,.8);min-width:75px;max-width:100px}
-.t-node.l2.hub-node{border-color:rgba(239,201,35,.3);color:#EFC923}
-.t-node.l3{background:#0d1017;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:3px 8px;font-size:8.5px;font-weight:500;color:rgba(232,228,216,.55);min-width:68px;max-width:90px}
-/* pastille sur nœud graphique */
-.t-node .n-badge{position:absolute;top:-6px;right:-6px;background:#EFC923;color:#0a0c0f;font-family:'DM Mono',monospace;font-size:7px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none}
 
-/* ── POST-IT ── */
-.postit-wrap{position:absolute;z-index:150;pointer-events:none}
-.postit-wrap.active{pointer-events:all}
-.postit{
-  background:#FFF9C4;
-  color:#1a1200;
-  border-radius:4px;
-  box-shadow:2px 3px 10px rgba(0,0,0,.45),0 1px 2px rgba(0,0,0,.2);
-  width:180px;
-  font-family:'Syne',sans-serif;
-  position:relative;
-  transition:box-shadow .15s;
+.t-node.root-node{
+  background:linear-gradient(135deg,#EFC923,#c49a00);
+  border-radius:24px;
+  padding:7px 18px;
+  font-size:11px;font-weight:700;color:#0a0c0f;
+  box-shadow:0 3px 14px rgba(239,201,35,.3);
 }
-.postit:hover{box-shadow:3px 5px 16px rgba(0,0,0,.55)}
-.postit-head{background:#F9E84A;border-radius:4px 4px 0 0;padding:6px 8px;display:flex;align-items:center;justify-content:space-between;cursor:move}
-.postit-author{font-size:9px;font-weight:700;letter-spacing:.04em;color:#5a4200;text-transform:uppercase;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.postit-date{font-family:'DM Mono',monospace;font-size:8px;color:rgba(90,66,0,.5);flex-shrink:0;margin-left:6px}
-.postit-del{background:none;border:none;cursor:pointer;color:rgba(90,66,0,.4);font-size:12px;padding:0 0 0 6px;line-height:1;transition:color .15s;flex-shrink:0}
-.postit-del:hover{color:#c0392b}
-.postit-body{padding:8px 9px 10px;font-size:11px;line-height:1.5;color:#2a1e00;min-height:44px;word-break:break-word;white-space:pre-wrap}
-.postit-connector{position:absolute;width:2px;background:rgba(249,232,74,.6);transform-origin:top center;pointer-events:none;z-index:149}
-
-/* Formulaire post-it */
-.postit-form{
-  position:fixed;z-index:300;
-  background:#FFF9C4;
+.t-node.l1{
+  background:#1a1f2a;
+  border:1.5px solid rgba(239,201,35,.35);
   border-radius:6px;
-  box-shadow:4px 6px 24px rgba(0,0,0,.6);
-  width:220px;
-  padding:0;
-  overflow:hidden;
-  animation:popIn .15s ease;
+  padding:4px 7px;
+  font-size:9.5px;font-weight:600;color:#e8e4d8;
+  box-shadow:0 2px 6px rgba(0,0,0,.4);
+  min-width:60px;max-width:95px;
+  flex-direction:column;gap:1px;
 }
-@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
-.postit-form-head{background:#F9E84A;padding:8px 10px;font-size:10px;font-weight:700;color:#5a4200;text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center}
-.postit-form-close{background:none;border:none;cursor:pointer;font-size:14px;color:rgba(90,66,0,.5);padding:0}
-.postit-form-close:hover{color:#c0392b}
-.postit-form input,.postit-form textarea{width:100%;background:transparent;border:none;outline:none;font-family:'Syne',sans-serif;color:#2a1e00;padding:8px 10px}
-.postit-form input{border-bottom:1px solid rgba(90,66,0,.15);font-size:11px;font-weight:600}
-.postit-form input::placeholder,.postit-form textarea::placeholder{color:rgba(90,66,0,.35)}
-.postit-form textarea{font-size:11px;line-height:1.5;resize:none;height:80px}
-.postit-form-actions{display:flex;gap:6px;padding:8px 10px;border-top:1px solid rgba(90,66,0,.1)}
-.postit-form-actions button{flex:1;padding:7px;font-size:11px;font-weight:700;font-family:'Syne',sans-serif;border:none;border-radius:4px;cursor:pointer;transition:opacity .15s}
-.btn-send{background:#0a0c0f;color:#EFC923}
-.btn-send:hover{opacity:.85}
-.btn-cancel{background:rgba(90,66,0,.1);color:#5a4200}
-.btn-cancel:hover{opacity:.7}
-
-/* pas d'overlay — le curseur crosshair est géré via body.annotating */
-
-/* Toast */
-#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1f2a;border:1px solid rgba(239,201,35,.3);color:#e8e4d8;font-size:11px;padding:9px 16px;border-radius:8px;opacity:0;transition:all .3s;pointer-events:none;z-index:400;white-space:nowrap}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.t-node.l1 .nicon{font-size:11px;display:block;margin-bottom:1px}
+.t-node.l1.hub-node{border-color:rgba(159,143,223,.5)}
+.t-node.l2{
+  background:#111318;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;
+  padding:3px 9px;
+  font-size:9px;font-weight:500;color:rgba(232,228,216,.8);
+  min-width:75px;max-width:100px;
+}
+.t-node.l2.hub-node{border-color:rgba(239,201,35,.3);color:#EFC923}
+.t-node.l3{
+  background:#0d1017;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:8px;
+  padding:3px 8px;
+  font-size:8.5px;font-weight:500;color:rgba(232,228,216,.55);
+  min-width:68px;max-width:90px;
+}
 
 .hidden{display:none!important}
 ::-webkit-scrollbar{width:5px;height:5px}
@@ -166,28 +128,23 @@ body.annotating .t-node:hover{outline:2px dashed rgba(239,201,35,.5);outline-off
   <div class="sep"></div>
   <div class="htitle">Arborescence du site</div>
   <div class="search"><input type="text" id="search" placeholder="Rechercher une page…" oninput="doSearch(this.value)"></div>
-  <div class="header-right">
-    <button class="btn-comment" id="btnAnnotate" onclick="toggleAnnotate()">
-      <span class="dot"></span>
-      Commenter
-      <span class="comment-count" id="commentCount">0</span>
-    </button>
-    <div class="sep"></div>
-    <div class="mode-toggle">
-      <button class="mode-btn active" id="btnList" onclick="setMode('list')">Liste</button>
-      <button class="mode-btn" id="btnTree" onclick="setMode('tree')">Arborescence</button>
-    </div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="btnList" onclick="setMode('list')">📋 Liste</button>
+    <button class="mode-btn" id="btnTree" onclick="setMode('tree')">🌳 Arborescence</button>
   </div>
 </header>
 
 <main>
+  <!-- MODE LISTE -->
   <div id="listView">
     <div class="root" onclick="toggleAll()">
-      <div class="root-t">harfang-events.fr</div>
+      <div class="root-t">🌐 harfang-events.fr</div>
       <div class="root-h">Cliquer pour tout ouvrir / fermer</div>
     </div>
     <div id="listInner"></div>
   </div>
+
+  <!-- MODE ARBORESCENCE -->
   <div id="treeView">
     <div id="treeCanvas">
       <svg class="connectors" id="svgLines"></svg>
@@ -195,30 +152,11 @@ body.annotating .t-node:hover{outline:2px dashed rgba(239,201,35,.5);outline-off
   </div>
 </main>
 
-<!-- Formulaire post-it -->
-<div class="postit-form" id="postitForm" style="display:none">
-  <div class="postit-form-head">
-    Nouveau commentaire
-    <button class="postit-form-close" onclick="closeForm()">✕</button>
-  </div>
-  <input type="text" id="formAuthor" placeholder="Votre prénom…" maxlength="24">
-  <textarea id="formText" placeholder="Votre commentaire…" maxlength="300"></textarea>
-  <div class="postit-form-actions">
-    <button class="btn-cancel" onclick="closeForm()">Annuler</button>
-    <button class="btn-send" onclick="submitComment()">Publier</button>
-  </div>
-</div>
-
-<div id="toast"></div>
-
 <script>
-/* ═══════════════════════════════════════
-   DONNÉES
-═══════════════════════════════════════ */
 const D=[
-  {color:'#EFC923',title:'Accueil',desc:'Page d\'entrée.'},
-  {color:'#5f9fbf',title:'Agence',desc:'Histoire, ADN, méthode, équipe.'},
-  {color:'#9f8fdf',title:'Expertises',desc:'Les métiers maîtrisés.',hub:true,
+  {icon:'🏠',color:'#EFC923',title:'Accueil',desc:'Page d\'entrée.'},
+  {icon:'🦅',color:'#5f9fbf',title:'Agence',desc:'Histoire, ADN, méthode, équipe.'},
+  {icon:'⚡',color:'#9f8fdf',title:'Expertises',desc:'Les métiers maîtrisés.',hub:true,
    children:[
     {title:'Création',desc:'Concepts, scénographies, identités visuelles.'},
     {title:'Fabrication',desc:'Atelier en propre : stands, mobilier, décors.'},
@@ -234,65 +172,52 @@ const D=[
     {title:'Scénographie',desc:'Environnement immersif.'},
     {title:'Location mobilier',desc:'Mobilier événementiel.'},
    ]},
-  {color:'#EFC923',title:'Solutions',desc:'Types d\'événements.',hub:true,
+  {icon:'🎯',color:'#EFC923',title:'Solutions',desc:'Types d\'événements.',hub:true,
    children:[
     {title:'Événements entreprise',hub:true,
      children:[
-      {title:'Séminaire'},{title:'Team Building'},{title:'Incentive'},
-      {title:'Soirée de Noël'},{title:'Soirée à thème'},{title:'Soirée insolite'},
-      {title:'Conférence'},{title:'Salons & congrès'},{title:'Sur-mesure'},
+      {title:'Séminaire'},
+      {title:'Team Building'},
+      {title:'Incentive'},
+      {title:'Soirée de Noël'},
+      {title:'Soirée à thème'},
+      {title:'Soirée insolite'},
+      {title:'Conférence'},
+      {title:'Salons & congrès'},
+      {title:'Sur-mesure'},
      ]},
     {title:'Événements commerciaux',hub:true,
      children:[
-      {title:'Boutique éphémère'},{title:'Corner en magasin'},
-      {title:'Lancement de marque'},{title:'Lancement de produit'},{title:'Roadshow'},
+      {title:'Boutique éphémère'},
+      {title:'Corner en magasin'},
+      {title:'Lancement de marque'},
+      {title:'Lancement de produit'},
+      {title:'Roadshow'},
      ]},
     {title:'Sur-mesure',desc:'Votre vision, nos mains.'},
    ]},
-  {color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets.'},
-  {color:'#5f9fbf',title:'Agences',desc:'3 agences en France.',
-   children:[{title:'Strasbourg'},{title:'Paris'},{title:'Cannes'}]},
-  {color:'#cf8030',title:'Contact',desc:'Formulaire de devis.'},
+  {icon:'📸',color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets.'},
+  {icon:'🏙️',color:'#5f9fbf',title:'Agences',desc:'3 agences en France.',
+   children:[
+    {title:'Strasbourg'},
+    {title:'Paris'},
+    {title:'Cannes'},
+   ]},
+  {icon:'✉️',color:'#cf8030',title:'Contact',desc:'Formulaire de devis.'},
 ];
 
-/* ═══════════════════════════════════════
-   COMMENTAIRES — stockage partagé
-═══════════════════════════════════════ */
-let comments = []; // [{id,author,text,nodeKey,ts,offsetX,offsetY}]
-// nodeKey = titre du nœud (unique par page)
-
-async function loadComments(){
-  try{
-    const r = await window.storage.get('harfang-comments', true);
-    comments = r ? JSON.parse(r.value) : [];
-  }catch(e){ comments=[]; }
-  renderAllPostits();
-  updateCount();
-}
-
-async function saveComments(){
-  try{
-    await window.storage.set('harfang-comments', JSON.stringify(comments), true);
-  }catch(e){ showToast('Erreur de sauvegarde.'); }
-}
-
-/* ═══════════════════════════════════════
-   MODE LISTE
-═══════════════════════════════════════ */
+/* ─────────── MODE LISTE ─────────── */
 function n3el(n){
   const d=document.createElement('div');
   d.className='n3';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
-  d.dataset.nodekey=n.title;
   d.innerHTML=`<div class="n3-dash">→</div><div><div class="n3-title">${n.title}</div>${n.desc?`<div class="n3-desc">${n.desc}</div>`:''}</div>`;
-  d.addEventListener('click', e=>{ if(annotating){ e.stopPropagation(); openForm(n.title, d); } });
   return d;
 }
 function n2el(n){
   const hasC=n.children&&n.children.length;
   const d=document.createElement('div');
   d.className='n2';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
-  d.dataset.nodekey=n.title;
-  d.innerHTML=`<div class="n2h" onclick="n2click(event,this,'${n.title.replace(/'/g,"\\'")}')">
+  d.innerHTML=`<div class="n2h" onclick="tog(this)">
     <div class="n2-dot"></div>
     <div class="n2-inf">
       <div class="n2-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
@@ -302,17 +227,12 @@ function n2el(n){
   if(hasC){const body=d.querySelector('.n2b');const list=document.createElement('div');list.className='n3list';n.children.forEach(c=>list.appendChild(c.children?n2el(c):n3el(c)));body.appendChild(list);}
   return d;
 }
-function n2click(e,h,key){
-  if(annotating){ e.stopPropagation(); openForm(key, h.closest('.n2')); return; }
-  tog(h);
-}
 function n1el(n){
   const hasC=n.children&&n.children.length;
   const w=document.createElement('div');
   w.className='n1';w.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
-  w.dataset.nodekey=n.title;
-  w.innerHTML=`<div class="n1h" onclick="n1click(event,this,'${n.title.replace(/'/g,"\\'")}')">
-    <div class="n1-ico" style="background:${n.color}"></div>
+  w.innerHTML=`<div class="n1h" onclick="tog(this)">
+    <div class="n1-ico" style="background:${n.color}18">${n.icon}</div>
     <div class="n1-inf">
       <div class="n1-title">${n.title}${n.hub?'<span class="tag tag-hub">Hub</span>':''}</div>
       ${n.desc?`<div class="n1-desc">${n.desc}</div>`:''}
@@ -323,71 +243,95 @@ function n1el(n){
   if(hasC){const list=w.querySelector('.n2list');n.children.forEach(c=>list.appendChild(n2el(c)));}
   return w;
 }
-function n1click(e,h,key){
-  if(annotating){ e.stopPropagation(); openForm(key, h.closest('.n1')); return; }
-  tog(h);
-}
 function tog(h){const b=h.nextElementSibling,c=h.querySelector('.chev');if(!b)return;const o=b.style.display==='block';b.style.display=o?'none':'block';if(c)c.classList.toggle('open',!o);}
 let allOpen=false;
-function toggleAll(){ if(annotating)return; allOpen=!allOpen;document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display=allOpen?'block':'none');document.querySelectorAll('.chev').forEach(c=>c.classList.toggle('open',allOpen));}
+function toggleAll(){allOpen=!allOpen;document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display=allOpen?'block':'none');document.querySelectorAll('.chev').forEach(c=>c.classList.toggle('open',allOpen));}
 function doSearch(q){q=q.toLowerCase().trim();if(!q){document.querySelectorAll('.n1,.n2,.n3').forEach(e=>e.classList.remove('hidden'));document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='none');document.querySelectorAll('.chev').forEach(c=>c.classList.remove('open'));return;}document.querySelectorAll('.n3').forEach(e=>e.classList.toggle('hidden',!e.dataset.s.includes(q)));document.querySelectorAll('.n2').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n3')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n2b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});document.querySelectorAll('.n1').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n2')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n1b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});}
 
 const listInner=document.getElementById('listInner');
 D.forEach(n=>listInner.appendChild(n1el(n)));
 
-/* ═══════════════════════════════════════
-   MODE ARBORESCENCE
-═══════════════════════════════════════ */
-const PAD_X=20,PAD_Y=20;
-const NODE_W_ROOT=140,NODE_H_ROOT=32;
-const NODE_W_L1=88,NODE_H_L1=38;
-const NODE_W_L2=90,NODE_H_L2=24;
-const NODE_W_L3=80,NODE_H_L3=22;
-const GAP_X_L1=12,GAP_X_L2=6,GAP_X_L3=5;
-const ROW_H_01=55,ROW_H_12=50,ROW_H_23=44;
-let linesData=[];
 
-function measureL2Group(n2){if(!n2.children||!n2.children.length)return NODE_W_L2;const t=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;return Math.max(NODE_W_L2,t);}
-function measureL1Group(n1){if(!n1.children||!n1.children.length)return NODE_W_L1;const ws=n1.children.map(measureL2Group);const t=ws.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;return Math.max(NODE_W_L1,t);}
+/* ─────────── MODE ARBORESCENCE ─────────── */
+// Layout params
+const PAD_X=20, PAD_Y=20;
+const NODE_W_ROOT=140, NODE_H_ROOT=32;
+const NODE_W_L1=88, NODE_H_L1=38;
+const NODE_W_L2=90, NODE_H_L2=24;
+const NODE_W_L3=80, NODE_H_L3=22;
+const GAP_X_L1=12, GAP_X_L2=6, GAP_X_L3=5;
+const ROW_H_01=55, ROW_H_12=50, ROW_H_23=44;
+
+let positions=[], lines=[];
+
+function measureL2Group(n2){
+  // returns total width of l2 + its l3 children
+  if(!n2.children||!n2.children.length) return NODE_W_L2;
+  const l3total=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;
+  return Math.max(NODE_W_L2, l3total);
+}
+
+function measureL1Group(n1){
+  // total width of l1 column (l1 node + its l2 children spread below)
+  if(!n1.children||!n1.children.length) return NODE_W_L1;
+  const l2widths=n1.children.map(measureL2Group);
+  const totalL2=l2widths.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;
+  return Math.max(NODE_W_L1, totalL2);
+}
 
 function buildLayout(){
-  linesData=[];
+  positions=[];lines=[];
   const canvas=document.getElementById('treeCanvas');
   const svg=document.getElementById('svgLines');
+  // clear old nodes
   canvas.querySelectorAll('.t-node').forEach(e=>e.remove());
   svg.innerHTML='';
 
+  // Compute widths per L1
   const l1widths=D.map(measureL1Group);
   const totalW=l1widths.reduce((a,b)=>a+b,0)+(D.length-1)*GAP_X_L1+PAD_X*2;
-  const rootY=PAD_Y,rootX=totalW/2-NODE_W_ROOT/2;
 
-  addNode(rootX,rootY,NODE_W_ROOT,NODE_H_ROOT,'harfang-events.fr','root-node','harfang-events.fr');
+  // Root Y center
+  const rootY=PAD_Y;
+  const rootX=totalW/2-NODE_W_ROOT/2;
 
+  // Place root
+  addNode(rootX, rootY, NODE_W_ROOT, NODE_H_ROOT, '🌐 harfang-events.fr', 'root-node');
+
+  // L1 row y
   const l1Y=rootY+NODE_H_ROOT+ROW_H_01;
   let curX=PAD_X;
+
   D.forEach((n1,i)=>{
     const gw=l1widths[i];
     const l1X=curX+gw/2-NODE_W_L1/2;
-    addNode(l1X,l1Y,NODE_W_L1,NODE_H_L1,n1.title,'l1'+(n1.hub?' hub-node':''),n1.title);
-    addLine(totalW/2,rootY+NODE_H_ROOT,l1X+NODE_W_L1/2,l1Y);
+    const label=(n1.icon?n1.icon+'\n':'')+n1.title;
+    addNode(l1X, l1Y, NODE_W_L1, NODE_H_L1, label, 'l1'+(n1.hub?' hub-node':''), n1.icon, n1.title);
+    // line root → l1
+    addLine(totalW/2, rootY+NODE_H_ROOT, l1X+NODE_W_L1/2, l1Y);
 
     if(n1.children&&n1.children.length){
       const l2Y=l1Y+NODE_H_L1+ROW_H_12;
+      // compute L2 positions within the group
       const l2ws=n1.children.map(measureL2Group);
       const totalL2W=l2ws.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;
       let l2CurX=curX+(gw-totalL2W)/2;
+
       n1.children.forEach((n2,j)=>{
         const l2gw=l2ws[j];
         const l2X=l2CurX+l2gw/2-NODE_W_L2/2;
-        addNode(l2X,l2Y,NODE_W_L2,NODE_H_L2,n2.title,'l2'+(n2.hub?' hub-node':''),n2.title);
-        addLine(l1X+NODE_W_L1/2,l1Y+NODE_H_L1,l2X+NODE_W_L2/2,l2Y);
+        addNode(l2X, l2Y, NODE_W_L2, NODE_H_L2, n2.title+(n2.hub?' ●':''), 'l2'+(n2.hub?' hub-node':''));
+        // line l1 → l2
+        addLine(l1X+NODE_W_L1/2, l1Y+NODE_H_L1, l2X+NODE_W_L2/2, l2Y);
+
         if(n2.children&&n2.children.length){
           const l3Y=l2Y+NODE_H_L2+ROW_H_23;
           const l3total=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;
           let l3CurX=l2CurX+(l2gw-l3total)/2;
+
           n2.children.forEach(n3=>{
-            addNode(l3CurX,l3Y,NODE_W_L3,NODE_H_L3,n3.title,'l3',n3.title);
-            addLine(l2X+NODE_W_L2/2,l2Y+NODE_H_L2,l3CurX+NODE_W_L3/2,l3Y);
+            addNode(l3CurX, l3Y, NODE_W_L3, NODE_H_L3, n3.title, 'l3');
+            addLine(l2X+NODE_W_L2/2, l2Y+NODE_H_L2, l3CurX+NODE_W_L3/2, l3Y);
             l3CurX+=NODE_W_L3+GAP_X_L3;
           });
         }
@@ -397,14 +341,20 @@ function buildLayout(){
     curX+=gw+GAP_X_L1;
   });
 
+  // compute canvas height
   let maxY=0;
-  canvas.querySelectorAll('.t-node').forEach(n=>{const b=parseInt(n.style.top)+(parseInt(n.style.height)||40);if(b>maxY)maxY=b;});
+  canvas.querySelectorAll('.t-node').forEach(n=>{
+    const b=parseInt(n.style.top)+(parseInt(n.style.height)||40);
+    if(b>maxY)maxY=b;
+  });
   canvas.style.width=totalW+'px';
-  canvas.style.height=(maxY+PAD_Y+60)+'px';
-  svg.setAttribute('viewBox',`0 0 ${totalW} ${maxY+PAD_Y+60}`);
+  canvas.style.height=(maxY+PAD_Y)+'px';
+  svg.setAttribute('viewBox',`0 0 ${totalW} ${maxY+PAD_Y}`);
   svg.style.width=totalW+'px';
-  svg.style.height=(maxY+PAD_Y+60)+'px';
-  linesData.forEach(([x1,y1,x2,y2])=>{
+  svg.style.height=(maxY+PAD_Y)+'px';
+
+  // draw lines
+  lines.forEach(([x1,y1,x2,y2])=>{
     const path=document.createElementNS('http://www.w3.org/2000/svg','path');
     const midY=(y1+y2)/2;
     path.setAttribute('d',`M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`);
@@ -414,29 +364,27 @@ function buildLayout(){
     path.setAttribute('stroke-linecap','round');
     svg.appendChild(path);
   });
-
-  renderAllPostits();
 }
 
-function addNode(x,y,w,h,label,cls,key){
+function addNode(x,y,w,h,label,cls,icon,title){
   const canvas=document.getElementById('treeCanvas');
   const el=document.createElement('div');
   el.className='t-node '+cls;
-  el.style.left=x+'px';el.style.top=y+'px';
-  el.style.width=w+'px';el.style.minHeight=h+'px';
-  el.dataset.nodekey=key;
-  el.textContent=label;
-  el.addEventListener('click',()=>{ if(annotating) openForm(key, el); });
+  el.style.left=x+'px';
+  el.style.top=y+'px';
+  el.style.width=w+'px';
+  el.style.minHeight=h+'px';
+  if(icon&&title){
+    el.innerHTML=`<span class="nicon">${icon}</span><span>${title}</span>`;
+  } else {
+    el.textContent=label.replace(' ●','');
+  }
   canvas.appendChild(el);
 }
-function addLine(x1,y1,x2,y2){linesData.push([x1,y1,x2,y2]);}
+function addLine(x1,y1,x2,y2){lines.push([x1,y1,x2,y2]);}
 
-/* ═══════════════════════════════════════
-   SWITCH MODE
-═══════════════════════════════════════ */
-let currentMode='list';
+/* ─────────── SWITCH ─────────── */
 function setMode(mode){
-  currentMode=mode;
   document.getElementById('btnList').classList.toggle('active',mode==='list');
   document.getElementById('btnTree').classList.toggle('active',mode==='tree');
   if(mode==='list'){
@@ -448,231 +396,6 @@ function setMode(mode){
     buildLayout();
   }
 }
-
-/* ═══════════════════════════════════════
-   SYSTÈME D'ANNOTATION
-═══════════════════════════════════════ */
-let annotating=false;
-let pendingNodeKey=null, pendingAnchor=null;
-
-function toggleAnnotate(){
-  annotating=!annotating;
-  document.body.classList.toggle('annotating',annotating);
-  document.getElementById('btnAnnotate').classList.toggle('active',annotating);
-  if(!annotating) closeForm();
-  showToast(annotating ? 'Cliquez sur un nœud pour commenter' : 'Mode commentaire désactivé');
-}
-
-function openForm(nodeKey, anchorEl){
-  pendingNodeKey=nodeKey;
-  pendingAnchor=anchorEl;
-  const form=document.getElementById('postitForm');
-  // Positionner le formulaire près du nœud
-  const rect=anchorEl.getBoundingClientRect();
-  let top=rect.bottom+8, left=rect.left;
-  if(left+230>window.innerWidth) left=window.innerWidth-235;
-  if(top+200>window.innerHeight) top=rect.top-210;
-  form.style.top=top+'px';
-  form.style.left=left+'px';
-  form.style.display='block';
-  setTimeout(()=>document.getElementById('formAuthor').focus(),50);
-}
-
-function closeForm(){
-  document.getElementById('postitForm').style.display='none';
-  document.getElementById('formAuthor').value='';
-  document.getElementById('formText').value='';
-  pendingNodeKey=null;pendingAnchor=null;
-}
-
-function submitComment(){
-  const author=document.getElementById('formAuthor').value.trim()||'Anonyme';
-  const text=document.getElementById('formText').value.trim();
-  if(!text){ document.getElementById('formText').focus(); return; }
-  if(!pendingNodeKey){ closeForm(); return; }
-
-  const comment={
-    id:'c'+Date.now(),
-    author,text,
-    nodeKey:pendingNodeKey,
-    ts:new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}),
-    // offset relatif au nœud (post-it décalé à droite)
-    offsetX:10, offsetY:-10
-  };
-  comments.push(comment);
-  saveComments();
-  renderAllPostits();
-  updateCount();
-  closeForm();
-  showToast(`Commentaire publié sur « ${pendingNodeKey} »`);
-}
-
-/* ═══════════════════════════════════════
-   RENDU POST-ITS
-═══════════════════════════════════════ */
-function renderAllPostits(){
-  // Supprimer anciens post-its
-  document.querySelectorAll('.postit-wrap').forEach(e=>e.remove());
-
-  comments.forEach(c=>renderPostit(c));
-  // Pastilles
-  renderBadges();
-}
-
-function renderPostit(c){
-  const canvas=currentMode==='tree'
-    ? document.getElementById('treeCanvas')
-    : document.getElementById('listView');
-
-  // Trouver l'ancre
-  const anchor=canvas.querySelector(`[data-nodekey="${CSS.escape(c.nodeKey)}"]`);
-  if(!anchor) return; // nœud pas visible (pas déplié, mauvais mode)
-
-  const wrap=document.createElement('div');
-  wrap.className='postit-wrap active';
-  wrap.dataset.cid=c.id;
-
-  const pit=document.createElement('div');
-  pit.className='postit';
-  pit.innerHTML=`
-    <div class="postit-head" onmousedown="startDrag(event,'${c.id}')">
-      <span class="postit-author">${escHtml(c.author)}</span>
-      <span class="postit-date">${c.ts}</span>
-      <button class="postit-del" onclick="deleteComment('${c.id}')" title="Supprimer">✕</button>
-    </div>
-    <div class="postit-body">${escHtml(c.text)}</div>`;
-  wrap.appendChild(pit);
-
-  // Positionnement
-  if(currentMode==='tree'){
-    const anchorLeft=parseInt(anchor.style.left)||0;
-    const anchorTop=parseInt(anchor.style.top)||0;
-    const anchorW=parseInt(anchor.style.width)||80;
-    wrap.style.position='absolute';
-    wrap.style.left=(anchorLeft+anchorW+c.offsetX)+'px';
-    wrap.style.top=(anchorTop+c.offsetY)+'px';
-    canvas.appendChild(wrap);
-  }else{
-    // Mode liste : on place le post-it en absolute par rapport au nœud
-    const anchorRect=anchor.getBoundingClientRect();
-    const canvasRect=canvas.getBoundingClientRect();
-    wrap.style.position='absolute';
-    wrap.style.left=(anchorRect.right-canvasRect.left+c.offsetX+window.scrollX)+'px';
-    wrap.style.top=(anchorRect.top-canvasRect.top+c.offsetY+window.scrollY)+'px';
-    canvas.style.position='relative';
-    canvas.appendChild(wrap);
-  }
-
-  // Drag
-  makeDraggable(wrap, c.id);
-}
-
-function renderBadges(){
-  // Enlever anciennes pastilles
-  document.querySelectorAll('.n-badge,.node-comment-badge').forEach(e=>e.remove());
-
-  const counts={};
-  comments.forEach(c=>{ counts[c.nodeKey]=(counts[c.nodeKey]||0)+1; });
-
-  Object.entries(counts).forEach(([key,n])=>{
-    // Mode arborescence
-    document.querySelectorAll(`.t-node[data-nodekey="${CSS.escape(key)}"]`).forEach(el=>{
-      const b=document.createElement('div');
-      b.className='n-badge';b.textContent=n;
-      el.style.position='relative';
-      el.appendChild(b);
-    });
-    // Mode liste
-    document.querySelectorAll(`[data-nodekey="${CSS.escape(key)}"] .n1h,
-      [data-nodekey="${CSS.escape(key)}"] .n2h`).forEach(el=>{
-      const b=document.createElement('div');
-      b.className='node-comment-badge';b.textContent=n;
-      el.style.position='relative';
-      el.appendChild(b);
-    });
-  });
-}
-
-function deleteComment(id){
-  comments=comments.filter(c=>c.id!==id);
-  saveComments();
-  renderAllPostits();
-  updateCount();
-  showToast('Commentaire supprimé');
-}
-
-function updateCount(){
-  const el=document.getElementById('commentCount');
-  el.textContent=comments.length;
-  el.classList.toggle('visible',comments.length>0);
-}
-
-/* ═══════════════════════════════════════
-   DRAG POST-IT
-═══════════════════════════════════════ */
-let dragState=null;
-function makeDraggable(wrap, id){
-  const head=wrap.querySelector('.postit-head');
-  head.addEventListener('mousedown', e=>startDrag(e,id));
-}
-function startDrag(e,id){
-  e.preventDefault();
-  const wrap=document.querySelector(`.postit-wrap[data-cid="${id}"]`);
-  if(!wrap)return;
-  dragState={id,wrap,startX:e.clientX,startY:e.clientY,origLeft:parseInt(wrap.style.left)||0,origTop:parseInt(wrap.style.top)||0};
-  document.addEventListener('mousemove',onDrag);
-  document.addEventListener('mouseup',endDrag);
-}
-function onDrag(e){
-  if(!dragState)return;
-  const dx=e.clientX-dragState.startX,dy=e.clientY-dragState.startY;
-  dragState.wrap.style.left=(dragState.origLeft+dx)+'px';
-  dragState.wrap.style.top=(dragState.origTop+dy)+'px';
-}
-function endDrag(){
-  if(!dragState)return;
-  // Persister le nouvel offset
-  const c=comments.find(c=>c.id===dragState.id);
-  if(c){
-    const anchor=document.querySelector(`[data-nodekey="${CSS.escape(c.nodeKey)}"]`);
-    if(anchor && currentMode==='tree'){
-      const anchorLeft=parseInt(anchor.style.left)||0;
-      const anchorW=parseInt(anchor.style.width)||80;
-      c.offsetX=parseInt(dragState.wrap.style.left)-anchorLeft-anchorW;
-      c.offsetY=parseInt(dragState.wrap.style.top)-(parseInt(anchor.style.top)||0);
-    }
-    saveComments();
-  }
-  document.removeEventListener('mousemove',onDrag);
-  document.removeEventListener('mouseup',endDrag);
-  dragState=null;
-}
-
-/* ═══════════════════════════════════════
-   UTILITAIRES
-═══════════════════════════════════════ */
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-let toastTimer;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
-}
-
-// Fermer formulaire si clic hors formulaire
-document.addEventListener('click',e=>{
-  const form=document.getElementById('postitForm');
-  if(form.style.display!=='none' && !form.contains(e.target) && !e.target.closest('[data-nodekey]')){
-    closeForm();
-  }
-});
-
-/* ═══════════════════════════════════════
-   INIT
-═══════════════════════════════════════ */
-loadComments();
 </script>
 </body>
 </html>
