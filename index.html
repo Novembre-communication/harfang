@@ -138,7 +138,7 @@ main{padding:20px 20px 60px}
   <div id="listView">
     <div class="root" onclick="toggleAll()">
       <div class="root-t">harfang-events.fr</div>
-      <div class="root-h">Cliquer pour tout ouvrir / fermer</div>
+      <div class="root-h">Cliquer pour tout fermer / ouvrir</div>
     </div>
     <div id="listInner"></div>
   </div>
@@ -196,7 +196,7 @@ const D=[
     {title:'Sur-mesure',desc:'Votre vision, nos mains.'},
    ]},
   {color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets.'},
-  {color:'#5f9fbf',title:'Agences',desc:'3 agences en France.',
+  {color:'#5f9fbf',title:'Nos agences',desc:'3 agences en France.',
    children:[
     {title:'Strasbourg'},
     {title:'Paris'},
@@ -243,12 +243,16 @@ function n1el(n){
   return w;
 }
 function tog(h){const b=h.nextElementSibling,c=h.querySelector('.chev');if(!b)return;const o=b.style.display==='block';b.style.display=o?'none':'block';if(c)c.classList.toggle('open',!o);}
-let allOpen=false;
+let allOpen=true;
 function toggleAll(){allOpen=!allOpen;document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display=allOpen?'block':'none');document.querySelectorAll('.chev').forEach(c=>c.classList.toggle('open',allOpen));}
-function doSearch(q){q=q.toLowerCase().trim();if(!q){document.querySelectorAll('.n1,.n2,.n3').forEach(e=>e.classList.remove('hidden'));document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='none');document.querySelectorAll('.chev').forEach(c=>c.classList.remove('open'));return;}document.querySelectorAll('.n3').forEach(e=>e.classList.toggle('hidden',!e.dataset.s.includes(q)));document.querySelectorAll('.n2').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n3')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n2b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});document.querySelectorAll('.n1').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n2')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n1b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});}
+function doSearch(q){q=q.toLowerCase().trim();if(!q){document.querySelectorAll('.n1,.n2,.n3').forEach(e=>e.classList.remove('hidden'));document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='block');document.querySelectorAll('.chev').forEach(c=>c.classList.add('open'));return;}document.querySelectorAll('.n3').forEach(e=>e.classList.toggle('hidden',!e.dataset.s.includes(q)));document.querySelectorAll('.n2').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n3')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n2b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});document.querySelectorAll('.n1').forEach(e=>{const m=e.dataset.s.includes(q);const anyC=[...e.querySelectorAll('.n2')].some(n=>!n.classList.contains('hidden'));e.classList.toggle('hidden',!m&&!anyC);if(m||anyC){const b=e.querySelector('.n1b'),c=e.querySelector('.chev');if(b)b.style.display='block';if(c)c.classList.add('open');}});}
 
 const listInner=document.getElementById('listInner');
 D.forEach(n=>listInner.appendChild(n1el(n)));
+
+// Ouvrir tous les volets au chargement
+document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='block');
+document.querySelectorAll('.chev').forEach(c=>c.classList.add('open'));
 
 
 /* ─────────── MODE ARBORESCENCE ─────────── */
