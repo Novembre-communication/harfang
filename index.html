@@ -154,17 +154,43 @@ main{padding:20px 20px 60px}
 <script>
 const D=[
   {color:'#EFC923',title:'Accueil',desc:'Page d\'entrée.'},
-  {color:'#5f9fbf',title:'Agence',desc:'Histoire, ADN, méthode, équipe, bâtiment…'},
+  {color:'#5f9fbf',title:'Agence',desc:'Histoire, ADN, méthode Harfang, équipe, bâtiment…'},
   {color:'#9f8fdf',title:'Expertises',desc:'Les métiers maîtrisés par Harfang.',hub:true,
    children:[
     {title:'Conseil',desc:'Accompagnement en amont : tendances, cadres juridiques, administratifs et contractuels, SACEM. Une garantie pour sécuriser chaque projet.'},
-    {title:'Création',desc:'Concepts, identités visuelles, supports de communication.'},
-    {title:'Design d\'espaces / Modélisation / Scénographie',desc:'Conception 3D, aménagement d\'espaces, modélisation et scénographie.'},
-    {title:'Fabrication',desc:'Production concrète des éléments : stands, mobilier, décors sur-mesure.'},
-    {title:'Organisation / Livraison / Régie Technique / Ingénierie',desc:'Son, lumière, vidéo, structure scénique — coordination et régie générale de A à Z.'},
-    {title:'Production audiovisuelle / Studio photo-vidéo / Captation',desc:'Studio interne, captation événementielle, reportage photo et vidéo, vidéo d\'entreprise.'},
-    {title:'Stand et solutions événementielles',desc:'Conception et réalisation de stands et dispositifs événementiels.'},
-    {title:'Location mobilier / Décoration',desc:'Large gamme de mobilier événementiel et décoration, livraison et installation incluses.'},
+    {title:'Design',desc:'Design d\'espace, conception 3D, modélisation, identité visuelle, design graphique, scénographie.',hub:true,
+     children:[
+      {title:'Design d\'espace'},
+      {title:'Conception 3D / Modélisation'},
+      {title:'Identité visuelle'},
+      {title:'Design graphique'},
+      {title:'Scénographie'},
+     ]},
+    {title:'Fabrication / Atelier',desc:'Production sur-mesure : stands, décors, containers, pièces d\'atelier.',hub:true,
+     children:[
+      {title:'Stands sur-mesure'},
+      {title:'Décors'},
+      {title:'Containers événementiels'},
+      {title:'Pièces d\'atelier'},
+     ]},
+    {title:'Organisation / Régie / Ingénierie événementielle',desc:'Régie technique, régie générale, coordination jour J — valeur ajoutée humaine et savoir-faire opérationnel.'},
+    {title:'Production événementielle / Studio',desc:'Captation, studio interne, reportage photo et vidéo.',hub:true,
+     children:[
+      {title:'Captation événementielle'},
+      {title:'Studio interne'},
+      {title:'Reportage photo'},
+      {title:'Reportage vidéo'},
+      {title:'Vidéo d\'entreprise'},
+     ]},
+    {title:'Location',desc:'Matériel technique et mobilier — son, lumière, vidéo, structure, électricité, mobilier, décoration.',hub:true,
+     children:[
+      {title:'Son'},
+      {title:'Lumière'},
+      {title:'Vidéo'},
+      {title:'Structure / Électricité'},
+      {title:'Mobilier'},
+      {title:'Décoration'},
+     ]},
    ]},
   {color:'#EFC923',title:'Solutions',desc:'Types d\'événements.',hub:true,
    children:[
@@ -198,19 +224,18 @@ const D=[
     {title:'Sur-mesure',desc:'Votre vision, nos mains — mariages…'},
    ]},
   {color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets.'},
-  {color:'#5f9fbf',title:'Nos agences',desc:'3 agences en France.',
-   children:[
-    {title:'Strasbourg'},
-    {title:'Paris'},
-    {title:'Cannes'},
-   ]},
   {color:'#5fbd5f',title:'Blog / Actualités',desc:'Articles SEO, tendances, contenus LinkedIn et actualités Harfang.',hub:true,
    children:[
     {title:'Actualités Harfang',desc:'Nouveautés, projets récents, vie de l\'agence.'},
     {title:'Conseils & tendances',desc:'Articles experts — tendances événementielles, bonnes pratiques.'},
     {title:'Mots-clés SEO',desc:'Articles ciblés : séminaire en Alsace, soirée de Noël, anniversaire d\'entreprise…'},
    ]},
-  {color:'#cf8030',title:'Contact',desc:'Formulaire de devis.'},
+  {color:'#cf8030',title:'Contact',desc:'Formulaire de devis — qualification par type de projet et agence.',hub:true,
+   children:[
+    {title:'Agence Strasbourg'},
+    {title:'Agence Paris'},
+    {title:'Agence Cannes'},
+   ]},
 ];
 
 /* ─────────── MODE LISTE ─────────── */
