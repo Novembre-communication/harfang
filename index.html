@@ -26,7 +26,6 @@ header{background:#111318;border-bottom:1px solid rgba(255,255,255,.07);padding:
 
 main{padding:20px 20px 60px}
 
-/* ── MODE LISTE ── */
 .root{background:linear-gradient(135deg,#EFC923,#d4a500);border-radius:10px;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;user-select:none;max-width:860px;margin-left:auto;margin-right:auto}
 .root-t{font-size:13px;font-weight:700;color:#0a0c0f}
 .root-h{font-family:'DM Mono',monospace;font-size:10px;color:rgba(0,0,0,.4)}
@@ -61,7 +60,6 @@ main{padding:20px 20px 60px}
 .tag{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:10px;font-weight:500;margin-left:6px}
 .tag-hub{background:rgba(159,143,223,.1);color:#9f8fdf;border:1px solid rgba(159,143,223,.2)}
 
-/* ── MODE ARBORESCENCE ── */
 #treeView{display:none;overflow-x:auto;padding-bottom:20px}
 #treeView.active{display:block}
 #listView.hidden{display:none}
@@ -69,51 +67,14 @@ main{padding:20px 20px 60px}
 #treeCanvas{position:relative;overflow:visible}
 #treeCanvas svg.connectors{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 
-.t-node{
-  position:absolute;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;
-  cursor:default;
-  user-select:none;
-  transition:transform .15s, box-shadow .15s;
-}
+.t-node{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;cursor:default;user-select:none;transition:transform .15s,box-shadow .15s}
 .t-node:hover{transform:translateY(-2px)}
-
-.t-node.root-node{
-  background:linear-gradient(135deg,#EFC923,#c49a00);
-  border-radius:24px;
-  padding:7px 18px;
-  font-size:11px;font-weight:700;color:#0a0c0f;
-  box-shadow:0 3px 14px rgba(239,201,35,.3);
-}
-.t-node.l1{
-  background:#1a1f2a;
-  border:1.5px solid rgba(239,201,35,.35);
-  border-radius:6px;
-  padding:4px 7px;
-  font-size:9.5px;font-weight:600;color:#e8e4d8;
-  box-shadow:0 2px 6px rgba(0,0,0,.4);
-  min-width:60px;max-width:95px;
-  flex-direction:column;gap:1px;
-}
+.t-node.root-node{background:linear-gradient(135deg,#EFC923,#c49a00);border-radius:24px;padding:7px 18px;font-size:11px;font-weight:700;color:#0a0c0f;box-shadow:0 3px 14px rgba(239,201,35,.3)}
+.t-node.l1{background:#1a1f2a;border:1.5px solid rgba(239,201,35,.35);border-radius:6px;padding:4px 7px;font-size:9.5px;font-weight:600;color:#e8e4d8;box-shadow:0 2px 6px rgba(0,0,0,.4);min-width:60px;max-width:95px;flex-direction:column;gap:1px}
 .t-node.l1.hub-node{border-color:rgba(159,143,223,.5)}
-.t-node.l2{
-  background:#111318;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;
-  padding:3px 9px;
-  font-size:9px;font-weight:500;color:rgba(232,228,216,.8);
-  min-width:75px;max-width:100px;
-}
+.t-node.l2{background:#111318;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:3px 9px;font-size:9px;font-weight:500;color:rgba(232,228,216,.8);min-width:75px;max-width:100px}
 .t-node.l2.hub-node{border-color:rgba(239,201,35,.3);color:#EFC923}
-.t-node.l3{
-  background:#0d1017;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:8px;
-  padding:3px 8px;
-  font-size:8.5px;font-weight:500;color:rgba(232,228,216,.55);
-  min-width:68px;max-width:90px;
-}
+.t-node.l3{background:#0d1017;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:3px 8px;font-size:8.5px;font-weight:500;color:rgba(232,228,216,.55);min-width:68px;max-width:90px}
 
 .hidden{display:none!important}
 ::-webkit-scrollbar{width:5px;height:5px}
@@ -134,7 +95,6 @@ main{padding:20px 20px 60px}
 </header>
 
 <main>
-  <!-- MODE LISTE -->
   <div id="listView">
     <div class="root" onclick="toggleAll()">
       <div class="root-t">harfang-events.fr</div>
@@ -142,8 +102,6 @@ main{padding:20px 20px 60px}
     </div>
     <div id="listInner"></div>
   </div>
-
-  <!-- MODE ARBORESCENCE -->
   <div id="treeView">
     <div id="treeCanvas">
       <svg class="connectors" id="svgLines"></svg>
@@ -160,71 +118,36 @@ const D=[
     {title:'Conseil',desc:'Accompagnement en amont : tendances, cadres juridiques, administratifs et contractuels, SACEM. Une garantie pour sécuriser chaque projet.'},
     {title:'Design',desc:'Design d\'espace, conception 3D, modélisation, identité visuelle, design graphique, scénographie.',hub:true,
      children:[
-      {title:'Design d\'espace'},
-      {title:'Conception 3D / Modélisation'},
-      {title:'Identité visuelle'},
-      {title:'Design graphique'},
-      {title:'Scénographie'},
+      {title:'Design d\'espace'},{title:'Conception 3D / Modélisation'},{title:'Identité visuelle'},{title:'Design graphique'},{title:'Scénographie'},
      ]},
     {title:'Fabrication / Atelier',desc:'Production sur-mesure : stands, décors, containers, pièces d\'atelier.',hub:true,
      children:[
-      {title:'Stands sur-mesure'},
-      {title:'Décors'},
-      {title:'Containers événementiels'},
-      {title:'Pièces d\'atelier'},
+      {title:'Stands sur-mesure'},{title:'Décors'},{title:'Containers événementiels'},{title:'Pièces d\'atelier'},
      ]},
-    {title:'Organisation / Régie / Ingénierie événementielle',desc:'Régie technique, régie générale, coordination jour J — valeur ajoutée humaine et savoir-faire opérationnel.'},
+    {title:'Organisation / Régie / Ingénierie événementielle',desc:'Régie technique, régie générale, coordination jour J.'},
     {title:'Production événementielle / Studio',desc:'Captation, studio interne, reportage photo et vidéo.',hub:true,
      children:[
-      {title:'Captation événementielle'},
-      {title:'Studio interne'},
-      {title:'Reportage photo'},
-      {title:'Reportage vidéo'},
-      {title:'Vidéo d\'entreprise'},
+      {title:'Captation événementielle'},{title:'Studio interne'},{title:'Reportage photo'},{title:'Reportage vidéo'},{title:'Vidéo d\'entreprise'},
      ]},
-    {title:'Location',desc:'Matériel technique et mobilier — son, lumière, vidéo, structure, électricité, mobilier, décoration.',hub:true,
+    {title:'Location',desc:'Son, lumière, vidéo, structure, électricité, mobilier, décoration.',hub:true,
      children:[
-      {title:'Son'},
-      {title:'Lumière'},
-      {title:'Vidéo'},
-      {title:'Structure / Électricité'},
-      {title:'Mobilier'},
-      {title:'Décoration'},
+      {title:'Son'},{title:'Lumière'},{title:'Vidéo'},{title:'Structure / Électricité'},{title:'Mobilier'},{title:'Décoration'},
      ]},
    ]},
   {color:'#EFC923',title:'Solutions',desc:'Types d\'événements.',hub:true,
    children:[
     {title:'Événements entreprise',hub:true,
      children:[
-      {title:'Séminaire'},
-      {title:'Team Building'},
-      {title:'Incentive'},
-      {title:'Soirée de Noël'},
-      {title:'Soirée à thème'},
-      {title:'Soirée insolite'},
-      {title:'Conférence'},
-      {title:'Salons & congrès'},
-      {title:'Sur-mesure'},
-      {title:'Inauguration'},
-      {title:'Assemblée générale'},
-      {title:'Vœux entreprise'},
-      {title:'Anniversaire entreprise'},
+      {title:'Séminaire'},{title:'Team Building'},{title:'Incentive'},{title:'Soirée de Noël'},{title:'Soirée à thème'},{title:'Soirée insolite'},{title:'Conférence'},{title:'Salons & congrès'},{title:'Sur-mesure'},{title:'Inauguration'},{title:'Assemblée générale'},{title:'Vœux entreprise'},{title:'Anniversaire entreprise'},
      ]},
     {title:'Événements commerciaux',hub:true,
      children:[
-      {title:'Boutique éphémère'},
-      {title:'Corner en magasin'},
-      {title:'Lancement de marque'},
-      {title:'Lancement de produit'},
-      {title:'Roadshow'},
-      {title:'Stand salon'},
-      {title:'Activation de marque'},
-      {title:'Pop-up store'},
+      {title:'Boutique éphémère'},{title:'Corner en magasin'},{title:'Lancement de marque'},{title:'Lancement de produit'},{title:'Roadshow'},{title:'Stand salon'},{title:'Activation de marque'},{title:'Pop-up store'},
      ]},
     {title:'Sur-mesure',desc:'Votre vision, nos mains — mariages…'},
    ]},
   {color:'#5fbd5f',title:'Réalisations',desc:'Portfolio des projets.'},
-  {color:'#5fbd5f',title:'Blog / Actualités',desc:'Articles SEO, tendances, contenus LinkedIn et actualités Harfang.',hub:true,
+  {color:'#5fbd5f',title:'Actualités',desc:'Posts LinkedIn absorbés — actualités Harfang, tendances et contenus éditoriaux.',hub:true,
    children:[
     {title:'Actualités Harfang',desc:'Nouveautés, projets récents, vie de l\'agence.'},
     {title:'Conseils & tendances',desc:'Articles experts — tendances événementielles, bonnes pratiques.'},
@@ -232,13 +155,10 @@ const D=[
    ]},
   {color:'#cf8030',title:'Contact',desc:'Formulaire de devis — qualification par type de projet et agence.',hub:true,
    children:[
-    {title:'Agence Strasbourg'},
-    {title:'Agence Paris'},
-    {title:'Agence Cannes'},
+    {title:'Agence Strasbourg'},{title:'Agence Paris'},{title:'Agence Cannes'},
    ]},
 ];
 
-/* ─────────── MODE LISTE ─────────── */
 function n3el(n){
   const d=document.createElement('div');
   d.className='n3';d.dataset.s=(n.title+' '+(n.desc||'')).toLowerCase();
@@ -282,91 +202,49 @@ function doSearch(q){q=q.toLowerCase().trim();if(!q){document.querySelectorAll('
 
 const listInner=document.getElementById('listInner');
 D.forEach(n=>listInner.appendChild(n1el(n)));
-
-// Ouvrir tous les volets au chargement
 document.querySelectorAll('.n1b,.n2b').forEach(b=>b.style.display='block');
 document.querySelectorAll('.chev').forEach(c=>c.classList.add('open'));
 
+const PAD_X=20,PAD_Y=20,NODE_W_ROOT=140,NODE_H_ROOT=32,NODE_W_L1=88,NODE_H_L1=38,NODE_W_L2=90,NODE_H_L2=24,NODE_W_L3=80,NODE_H_L3=22,GAP_X_L1=12,GAP_X_L2=6,GAP_X_L3=5,ROW_H_01=55,ROW_H_12=50,ROW_H_23=44;
+let lines=[];
 
-/* ─────────── MODE ARBORESCENCE ─────────── */
-// Layout params
-const PAD_X=20, PAD_Y=20;
-const NODE_W_ROOT=140, NODE_H_ROOT=32;
-const NODE_W_L1=88, NODE_H_L1=38;
-const NODE_W_L2=90, NODE_H_L2=24;
-const NODE_W_L3=80, NODE_H_L3=22;
-const GAP_X_L1=12, GAP_X_L2=6, GAP_X_L3=5;
-const ROW_H_01=55, ROW_H_12=50, ROW_H_23=44;
-
-let positions=[], lines=[];
-
-function measureL2Group(n2){
-  // returns total width of l2 + its l3 children
-  if(!n2.children||!n2.children.length) return NODE_W_L2;
-  const l3total=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;
-  return Math.max(NODE_W_L2, l3total);
-}
-
-function measureL1Group(n1){
-  // total width of l1 column (l1 node + its l2 children spread below)
-  if(!n1.children||!n1.children.length) return NODE_W_L1;
-  const l2widths=n1.children.map(measureL2Group);
-  const totalL2=l2widths.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;
-  return Math.max(NODE_W_L1, totalL2);
-}
+function measureL2Group(n2){if(!n2.children||!n2.children.length)return NODE_W_L2;const l3total=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;return Math.max(NODE_W_L2,l3total);}
+function measureL1Group(n1){if(!n1.children||!n1.children.length)return NODE_W_L1;const l2widths=n1.children.map(measureL2Group);const totalL2=l2widths.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;return Math.max(NODE_W_L1,totalL2);}
 
 function buildLayout(){
-  positions=[];lines=[];
+  lines=[];
   const canvas=document.getElementById('treeCanvas');
   const svg=document.getElementById('svgLines');
-  // clear old nodes
   canvas.querySelectorAll('.t-node').forEach(e=>e.remove());
   svg.innerHTML='';
-
-  // Compute widths per L1
   const l1widths=D.map(measureL1Group);
   const totalW=l1widths.reduce((a,b)=>a+b,0)+(D.length-1)*GAP_X_L1+PAD_X*2;
-
-  // Root Y center
-  const rootY=PAD_Y;
-  const rootX=totalW/2-NODE_W_ROOT/2;
-
-  // Place root
-  addNode(rootX, rootY, NODE_W_ROOT, NODE_H_ROOT, 'harfang-events.fr', 'root-node');
-
-  // L1 row y
+  const rootY=PAD_Y,rootX=totalW/2-NODE_W_ROOT/2;
+  addNode(rootX,rootY,NODE_W_ROOT,NODE_H_ROOT,'harfang-events.fr','root-node');
   const l1Y=rootY+NODE_H_ROOT+ROW_H_01;
   let curX=PAD_X;
-
   D.forEach((n1,i)=>{
     const gw=l1widths[i];
     const l1X=curX+gw/2-NODE_W_L1/2;
-    addNode(l1X, l1Y, NODE_W_L1, NODE_H_L1, n1.title, 'l1'+(n1.hub?' hub-node':''));
-    // line root → l1
-    addLine(totalW/2, rootY+NODE_H_ROOT, l1X+NODE_W_L1/2, l1Y);
-
+    addNode(l1X,l1Y,NODE_W_L1,NODE_H_L1,n1.title,'l1'+(n1.hub?' hub-node':''));
+    addLine(totalW/2,rootY+NODE_H_ROOT,l1X+NODE_W_L1/2,l1Y);
     if(n1.children&&n1.children.length){
       const l2Y=l1Y+NODE_H_L1+ROW_H_12;
-      // compute L2 positions within the group
       const l2ws=n1.children.map(measureL2Group);
       const totalL2W=l2ws.reduce((a,b)=>a+b,0)+(n1.children.length-1)*GAP_X_L2;
       let l2CurX=curX+(gw-totalL2W)/2;
-
       n1.children.forEach((n2,j)=>{
         const l2gw=l2ws[j];
         const l2X=l2CurX+l2gw/2-NODE_W_L2/2;
-        addNode(l2X, l2Y, NODE_W_L2, NODE_H_L2, n2.title, 'l2'+(n2.hub?' hub-node':''));
-        // line l1 → l2
-        addLine(l1X+NODE_W_L1/2, l1Y+NODE_H_L1, l2X+NODE_W_L2/2, l2Y);
-
+        addNode(l2X,l2Y,NODE_W_L2,NODE_H_L2,n2.title,'l2'+(n2.hub?' hub-node':''));
+        addLine(l1X+NODE_W_L1/2,l1Y+NODE_H_L1,l2X+NODE_W_L2/2,l2Y);
         if(n2.children&&n2.children.length){
           const l3Y=l2Y+NODE_H_L2+ROW_H_23;
           const l3total=n2.children.length*NODE_W_L3+(n2.children.length-1)*GAP_X_L3;
           let l3CurX=l2CurX+(l2gw-l3total)/2;
-
           n2.children.forEach(n3=>{
-            addNode(l3CurX, l3Y, NODE_W_L3, NODE_H_L3, n3.title, 'l3');
-            addLine(l2X+NODE_W_L2/2, l2Y+NODE_H_L2, l3CurX+NODE_W_L3/2, l3Y);
+            addNode(l3CurX,l3Y,NODE_W_L3,NODE_H_L3,n3.title,'l3');
+            addLine(l2X+NODE_W_L2/2,l2Y+NODE_H_L2,l3CurX+NODE_W_L3/2,l3Y);
             l3CurX+=NODE_W_L3+GAP_X_L3;
           });
         }
@@ -375,57 +253,32 @@ function buildLayout(){
     }
     curX+=gw+GAP_X_L1;
   });
-
-  // compute canvas height
   let maxY=0;
-  canvas.querySelectorAll('.t-node').forEach(n=>{
-    const b=parseInt(n.style.top)+(parseInt(n.style.height)||40);
-    if(b>maxY)maxY=b;
-  });
-  canvas.style.width=totalW+'px';
-  canvas.style.height=(maxY+PAD_Y)+'px';
+  canvas.querySelectorAll('.t-node').forEach(n=>{const b=parseInt(n.style.top)+(parseInt(n.style.height)||40);if(b>maxY)maxY=b;});
+  canvas.style.width=totalW+'px';canvas.style.height=(maxY+PAD_Y)+'px';
   svg.setAttribute('viewBox',`0 0 ${totalW} ${maxY+PAD_Y}`);
-  svg.style.width=totalW+'px';
-  svg.style.height=(maxY+PAD_Y)+'px';
-
-  // draw lines
+  svg.style.width=totalW+'px';svg.style.height=(maxY+PAD_Y)+'px';
   lines.forEach(([x1,y1,x2,y2])=>{
     const path=document.createElementNS('http://www.w3.org/2000/svg','path');
     const midY=(y1+y2)/2;
     path.setAttribute('d',`M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`);
-    path.setAttribute('stroke','rgba(239,201,35,0.25)');
-    path.setAttribute('stroke-width','1.5');
-    path.setAttribute('fill','none');
-    path.setAttribute('stroke-linecap','round');
+    path.setAttribute('stroke','rgba(239,201,35,0.25)');path.setAttribute('stroke-width','1.5');path.setAttribute('fill','none');path.setAttribute('stroke-linecap','round');
     svg.appendChild(path);
   });
 }
-
 function addNode(x,y,w,h,label,cls){
   const canvas=document.getElementById('treeCanvas');
   const el=document.createElement('div');
-  el.className='t-node '+cls;
-  el.style.left=x+'px';
-  el.style.top=y+'px';
-  el.style.width=w+'px';
-  el.style.minHeight=h+'px';
-  el.textContent=label;
+  el.className='t-node '+cls;el.style.left=x+'px';el.style.top=y+'px';el.style.width=w+'px';el.style.minHeight=h+'px';el.textContent=label;
   canvas.appendChild(el);
 }
 function addLine(x1,y1,x2,y2){lines.push([x1,y1,x2,y2]);}
 
-/* ─────────── SWITCH ─────────── */
 function setMode(mode){
   document.getElementById('btnList').classList.toggle('active',mode==='list');
   document.getElementById('btnTree').classList.toggle('active',mode==='tree');
-  if(mode==='list'){
-    document.getElementById('listView').classList.remove('hidden');
-    document.getElementById('treeView').classList.remove('active');
-  }else{
-    document.getElementById('listView').classList.add('hidden');
-    document.getElementById('treeView').classList.add('active');
-    buildLayout();
-  }
+  if(mode==='list'){document.getElementById('listView').classList.remove('hidden');document.getElementById('treeView').classList.remove('active');}
+  else{document.getElementById('listView').classList.add('hidden');document.getElementById('treeView').classList.add('active');buildLayout();}
 }
 </script>
 </body>
